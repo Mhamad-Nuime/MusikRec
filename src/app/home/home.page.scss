@@ -1,20 +1,25 @@
 ion-content{
-  --background: rgb(255, 255, 255);
-  --color: black;
-  --padding-top: 50px;
+  --padding-top: 10px;
 }
-
+ion-grid{
+  height: 100%;
+  ion-row{
+    height: 100%;
+  }
+}
 img#head-phone{
   -webkit-animation: scale-up-center 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
 	        animation: scale-up-center 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
-          filter: drop-shadow(#46464649 1px -1px 1px);
+  filter: drop-shadow(blue 1px 0px 3px);
 }
 h1{
+  
   span{
-    text-shadow: blue 0px 0px 1.5px;
+    text-shadow:blue 0px 4px 2px;
+    font-size: 4rem;
   }
   span:nth-child(odd){
-    color: #3981fd;
+    color: var(--ion-color-primary);
   }
   span:nth-child(even){
     color: #463836;

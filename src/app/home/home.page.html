@@ -1,19 +1,25 @@
 <ion-content class="ion-padding">
-  <h1 class="logo-name ion-text-center ion-padding-top ion-margin-top" style="font-size: 3rem;">
-    <span class="briem-hand-500">M</span>
-    <span class="briem-hand-500">u</span>
-    <span class="briem-hand-500">s</span>
-    <span class="briem-hand-500">i</span>
-    <span class="briem-hand-500">k</span>
-    <span class="briem-hand-500">R</span>
-    <span class="briem-hand-500">e</span>
-    <span class="briem-hand-500">c</span>
-  </h1>
-  <div class="image ion-padding-vertical" style="width: fit-content; margin: auto;">
-    <img id="head-phone" src="assets/music.svg" alt="" width="200" height="300">
-  </div>
-  <ion-button class="rubik-300 ion-margin-top" color="primary" expand="block" routerLink="/dashbord">Get
-    Started</ion-button>
-  <ion-button class="rubik-300 ion-margin-top ion-margin-bottom" color="primary" expand="block" fill="outline" routerLink="/login">Login</ion-button>
-  <p class="ion-text-center ion-padding-top">You don't have an account?<a routerLink="/signup">Signup</a></p>
+  <ion-grid>
+    <ion-row class="ion-align-items-center">
+      <ion-col>
+        <h1 class="briem-hand-500 logo-name ion-text-center ion-padding-top ion-margin-top" style="font-size: 3rem;">
+          <span>M</span>
+          <span>u</span>
+          <span>s</span>
+          <span>i</span>
+          <span>k</span>
+          <span>R</span>
+          <span>e</span>
+          <span>c</span>
+        </h1>
+        <div class="image ion-padding-vertical" style="width: fit-content; margin: auto;">
+          <img id="head-phone" src="assets/music.svg" alt="" width="200" height="300">
+        </div>
+        <ion-button mode="ios" class="rubik-300 ion-margin-top" color="primary" expand="block" routerLink="/dashbord">Get
+          Started</ion-button>
+        <ion-button mode="ios" class="rubik-300 ion-margin-top ion-margin-bottom" color="primary" expand="block" fill="outline" routerLink="/login">Login</ion-button>
+        <p class="ion-text-center ion-padding-top">Don't have an account?  <a routerLink="/signup">Signup</a></p>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
