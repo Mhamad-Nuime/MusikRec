@@ -1,0 +1,85 @@
+<ion-content [fullscreen]="true">
+  <div class="header">
+    <div class="header-logo-container">
+      <img id="login-header" src="assets/signup-page/sexzphonman.svg" alt="" />
+      <h1 class="ion-text-center">SignUp</h1>
+    </div>
+  </div>
+  <ion-grid>
+    <ion-row class="ion-align-items-center">
+      <ion-col>
+        <ion-input
+          class="ion-margin-top ion-margin-bottom"
+          type="text"
+          label="First Name"
+          labelPlacement="floating"
+          fill="outline"
+          shape="round"
+          name="user-first-name"
+          [clearInput]="true"
+          (ionInput)="onEmailInput()"
+        >
+        </ion-input>
+        <ion-input
+          class="ion-margin-top ion-margin-bottom"
+          type="text"
+          label="Last Name"
+          labelPlacement="floating"
+          fill="outline"
+          shape="round"
+          name="user-email"
+          [clearInput]="true"
+          (ionInput)="onEmailInput()"
+        >
+        </ion-input>
+        <ion-input
+          class="ion-margin-top ion-margin-bottom"
+          type="email"
+          label="Email"
+          labelPlacement="floating"
+          fill="outline"
+          shape="round"
+          name="user-email"
+          [clearInput]="true"
+          (ionInput)="onEmailInput()"
+        >
+        </ion-input>
+        <ion-input
+          class="ion-margin-top ion-margin-bottom"
+          type="password"
+          label="Password"
+          labelPlacement="floating"
+          fill="outline"
+          shape="round"
+          name="user-password"
+          [clearOnEdit]="true"
+        >
+        </ion-input>
+        <ion-input
+          class="ion-margin-top ion-margin-bottom"
+          type="conformed-password"
+          label="Conforme Your Password"
+          labelPlacement="floating"
+          fill="outline"
+          shape="round"
+          name="user-conformed-password"
+          [clearOnEdit]="true"
+        >
+        </ion-input>
+        <ion-button
+          expand="block"
+          fill="solid"
+          mode="ios"
+          class="ion-margin-top ion-padding-top"
+          routerLink=""
+          >Send</ion-button
+        >
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-fab slot="fixed" horizontal="start" vertical="top">
+    <ion-fab-button routerLink="/home">
+      <img src="assets/login-page/arrow-back-outline.svg" alt="" />
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
