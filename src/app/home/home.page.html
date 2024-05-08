@@ -1,24 +1,37 @@
-<ion-content class="ion-padding">
+<ion-content class="ion-padding" [fullscreen]="true">
+  <div>
+    <img id='landing-page-background' src="assets/landing-page/landing-page-background.svg" alt="">
+  </div>
   <ion-grid>
-    <ion-row class="ion-align-items-center">
+    <ion-row>
       <ion-col>
-        <h1 class="briem-hand-500 logo-name ion-text-center ion-padding-top ion-margin-top" style="font-size: 3rem;">
-          <span>M</span>
-          <span>u</span>
-          <span>s</span>
-          <span>i</span>
-          <span>k</span>
-          <span>R</span>
-          <span>e</span>
-          <span>c</span>
-        </h1>
-        <div class="image ion-padding-vertical" style="width: fit-content; margin: auto;">
-          <img id="head-phone" src="assets/music.svg" alt="" width="200" height="300">
-        </div>
-        <ion-button mode="ios" class="rubik-300 ion-margin-top" color="primary" expand="block" routerLink="/dashbord">Get
-          Started</ion-button>
-        <ion-button mode="ios" class="rubik-300 ion-margin-top ion-margin-bottom" color="primary" expand="block" fill="outline" routerLink="/login">Login</ion-button>
-        <p class="ion-text-center ion-padding-top">Don't have an account?  <a routerLink="/signup">Signup</a></p>
+        <h1
+              class="briem-hand-500 logo-name ion-text-center"
+              style="font-size: 3rem"
+              color="primary"
+            >
+              MusicRec
+            </h1>
+        <ion-button
+          mode="ios"
+          class="ion-margin-top"
+          expand="block"
+          routerLink="/dashbord"
+          >Get Started</ion-button
+        >
+        <ion-button
+          mode="ios"
+          class="ion-margin-top ion-margin-bottom"
+          color="primary"
+          expand="block"
+          fill="outline"
+          routerLink="/login"
+          router-direction="forword"
+          >Login</ion-button
+        >
+        <p class="ion-text-center ion-padding-top">
+          Don't have an account? <a routerLink="/signup">Signup</a>
+        </p>
       </ion-col>
     </ion-row>
   </ion-grid>

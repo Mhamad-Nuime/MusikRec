@@ -1,0 +1,22 @@
+.header {
+  margin-top: 30px;
+  width: 100;
+  height: fit-content;
+  display: flex;
+  justify-content: center;
+  .header-logo-container {
+    position: relative;
+    width: fit-content;
+    h1 {
+      font-size: 2rem;
+      position: absolute;
+      left: 45px;
+      bottom: 3px;
+      color: var(--ion-color-secondary);
+      text-shadow: blue 0px 0px 1px;
+    }
+  }
+}
+ion-fab {
+  top: 40px;
+}
