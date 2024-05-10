@@ -1,6 +1,6 @@
-import { Component, EnvironmentInjector, inject} from '@angular/core';
+import { Component, EnvironmentInjector, ViewChild, inject} from '@angular/core';
 import { addIcons } from 'ionicons';
-import { home, search, library } from 'ionicons/icons';
+import { home, homeOutline, search, searchOutline, library, libraryOutline, playCircle, pauseCircle } from 'ionicons/icons';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {
@@ -8,15 +8,14 @@ import {
   IonIcon,
   IonTabBar,
   IonLabel,
-  IonTabButton,
-} from '@ionic/angular/standalone';
+  IonTabButton, IonRow, IonCol, IonButton } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-content',
   templateUrl: './content.page.html',
   styleUrls: ['./content.page.scss'],
   standalone: true,
-  imports: [
+  imports: [IonButton, IonCol, IonRow, 
     IonTabButton,
     IonLabel,
     IonTabBar,
@@ -28,9 +27,20 @@ import {
 })
 export class ContentPage {
   public environmentInjector = inject(EnvironmentInjector);
+  
+  @ViewChild('tabs') tabs!: IonTabs;
+  selected : string= '';
+  isPaused : boolean = false;
+  progress : number = 42;
 
   constructor() {
-    addIcons({ home, search, library });
+    addIcons({ home, homeOutline, search, searchOutline, library, libraryOutline, playCircle, pauseCircle });
   }
-
+  
+  setSelectedTabName() {
+    this.selected = this.tabs.getSelected() as string;
+  }
+  pauseOrPlay() : void {
+    this.isPaused = !this.isPaused ;
+  }
 }

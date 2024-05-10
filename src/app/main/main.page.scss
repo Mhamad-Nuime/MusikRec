@@ -1,0 +1,17 @@
+ion-card{
+  --background: var(--ion-color-secondary);
+  --color: var(--ion-color-primary);
+  box-shadow: none;
+}
+.slide-flex{
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.img-wrap img{
+  border-radius: 8px;
+  box-shadow: rgb(44, 42, 42) 0px 0px 3px;
+}
+.last-seen-slide-wrap{
+  height: 180px;
+}

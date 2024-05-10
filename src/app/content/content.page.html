@@ -1,17 +1,37 @@
-<ion-tabs>
+<ion-tabs #tabs (ionTabsDidChange)="setSelectedTabName()">
+  <!-- The dummy player stacked above the tabs -->
+  <div class="player">
+    <div class="progress-bar">
+      <div class="progress" [style.width]="progress + '%'"></div>
+    </div>
+    <ion-row class="ion-no-padding">
+      <ion-col size="2" class="ion-no-padding">
+        <img src="/assets/images/albums/when-we-all-fall-asleep.jpg">
+      </ion-col>
+      <ion-col size="8" class="ion-align-self-center">
+        <b>All the Good Girls Go to Hell</b><br>
+        <span>Billie Eilish</span>
+      </ion-col>
+      <ion-col size="2" class="ion-text-center ion-no-padding ion-align-self-center">
+        <ion-button fill="clear" class="ion-no-padding" (click)="pauseOrPlay()">
+          <ion-icon [name]="isPaused ? 'play-circle' : 'pause-circle'" color="light" size="large" slot="icon-only"></ion-icon>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </div>
   <ion-tab-bar slot="bottom">
     <ion-tab-button tab="main" href="/content/main">
-      <ion-icon aria-hidden="true" name="home"></ion-icon>
+      <ion-icon aria-hidden="true" [name]=" selected === 'main' ? 'home':'home-outline'"></ion-icon>
       <ion-label>home</ion-label>
     </ion-tab-button>
 
     <ion-tab-button tab="search" href="/content/search">
-      <ion-icon aria-hidden="true" name="search"></ion-icon>
+      <ion-icon aria-hidden="true" [name]=" selected === 'search' ? 'search':'search-outline'"></ion-icon>
       <ion-label>search</ion-label>
     </ion-tab-button>
 
     <ion-tab-button tab="playlists" href="/content/playlists">
-      <ion-icon aria-hidden="true" name="library"></ion-icon>
+      <ion-icon aria-hidden="true" [name]=" selected === 'playlists' ? 'library':'library-outline'"></ion-icon>
       <ion-label>playlists</ion-label>
     </ion-tab-button>
   </ion-tab-bar>

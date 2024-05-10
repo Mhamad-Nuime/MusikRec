@@ -1,16 +1,89 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      MusicRec
-    </ion-title>
+  <ion-toolbar color="primary">
+    <ion-title class="ion-text-center"> MusicRec </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Tab 3</ion-title>
+      <ion-title size="large">MusicRec</ion-title>
     </ion-toolbar>
   </ion-header>
-  <p>main tab</p>
+
+  <ion-card class="ion-no-margin">
+    <ion-card-header>
+      <ion-text>
+        <h3>Recommandations</h3>
+      </ion-text>
+    </ion-card-header>
+    <ion-card-content>
+      <div class="swiper-wrap">
+        <swiper-container
+          class="mySwiper"
+          pagination="true"
+          effect="coverflow"
+          grab-cursor="true"
+          centered-slides="true"
+          slides-per-view="auto"
+          coverflow-effect-rotate="50"
+          coverflow-effect-stretch="0"
+          coverflow-effect-depth="100"
+          coverflow-effect-modifier="1"
+          coverflow-effect-slide-shadows="true"
+          autoplay-delay="2500"
+          autoplay-disable-on-interaction="false"
+        >
+          @for(song of songs; track song.id){
+          <swiper-slide>
+            <div class="slide-flex">
+              <div class="img-wrap">
+                <img
+                  [src]="'/assets/images/albums/'+dasherize(song.image)+'.jpg'"
+                  alt=""
+                  width="100"
+                  height="100"
+                />
+              </div>
+              <p style="overflow-x: hidden">{{song.title}}</p>
+            </div>
+          </swiper-slide>
+          }
+        </swiper-container>
+      </div>
+    </ion-card-content>
+  </ion-card>
+  <ion-card class="ion-no-margin">
+    <ion-card-header>
+      <ion-text>
+        <h3>
+          Last seens 
+        </h3>
+      </ion-text>
+    </ion-card-header>
+    <ion-card-content>
+      <swiper-container
+        class="mySwiper"
+        scrollbar-hide="true"
+        space-between="10"
+        slides-per-view="3"
+      >
+        @for(lastSeenSong of lastSeensSongs;track lastSeenSong.id){
+        <swiper-slide>
+          <div class="last-seen-slide-wrap">
+            <div class="img-wrap">
+              <img
+                [src]="'/assets/images/albums/'+dasherize(lastSeenSong.image)+'.jpg'"
+                alt=""
+                width="100"
+                height="100"
+              />
+            </div>
+            <p [ngStyle]="{width : '100px',height: '40px', 'overflow': 'hidden'}">{{lastSeenSong.title}}</p>
+          </div>
+        </swiper-slide>
+        }
+      </swiper-container>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

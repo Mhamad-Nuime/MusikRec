@@ -3,12 +3,13 @@ ion-tab-bar {
 }
 
 ion-tab-button {
-  --color-selected: #fff;
+  --color-selected: black;
 }
 
 .player {
+  z-index: 0;
   height: 55px;
-  background: var(--ion-color-medium);
+  background: #707070;
   img {
       height: 55px;
   }
@@ -33,4 +34,7 @@ ion-icon{
 }
 ion-label{
   color: var(--ion-color-secondary);
+}
+ion-button{
+  --background: transparent;
 }
