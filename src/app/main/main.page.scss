@@ -1,7 +1,6 @@
-ion-card{
-  --background: var(--ion-color-secondary);
-  --color: var(--ion-color-primary);
-  box-shadow: none;
+ion-card#recommandations{
+  --background: var(--ion-color-primary-tint);
+  --color: var(--ion-color-secondary);
 }
 .slide-flex{
   display: flex;
@@ -13,5 +12,10 @@ ion-card{
   box-shadow: rgb(44, 42, 42) 0px 0px 3px;
 }
 .last-seen-slide-wrap{
-  height: 180px;
+  height: 160px;
+}
+ion-item::part(detail-icon) {
+  color: var(--ion-color-primary-tint);
+  opacity: 1;
+  font-size: 20px;
 }

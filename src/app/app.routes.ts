@@ -18,6 +18,10 @@ export const routes: Routes = [
     loadChildren: () => import('./content/content.routes').then( (m) => m.routes),
   },
   {
+    path: 'content/main/details',
+    loadComponent: () => import('./details/details.page').then( m => m.DetailsPage)
+  },
+  {
     path: '',
     redirectTo: '/home',
     pathMatch: 'full',
@@ -25,5 +29,6 @@ export const routes: Routes = [
   {
     path: '**',
     loadComponent: () => import('./home/home.page').then((m) => m.HomePage),
-  }
+  },
+
 ];

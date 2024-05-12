@@ -1,6 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar color="primary">
-    <ion-title class="ion-text-center"> MusicRec </ion-title>
+    <ion-title class="ion-text-left"> MusicRec </ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -11,7 +11,7 @@
     </ion-toolbar>
   </ion-header>
 
-  <ion-card class="ion-no-margin">
+  <ion-card id="recommandations">
     <ion-card-header>
       <ion-text>
         <h3>Recommandations</h3>
@@ -52,12 +52,15 @@
         </swiper-container>
       </div>
     </ion-card-content>
-  </ion-card>
-  <ion-card class="ion-no-margin">
+  </ion-card >
+  <ion-card class="ion-no-margin" id="history" [ngStyle]="{
+    '--background': 'var(ion-color-secondary)',
+    '--color': 'var(ion-color-primary)'
+  }">
     <ion-card-header>
-      <ion-text>
+      <ion-text color="primary">
         <h3>
-          Last seens 
+          History 
         </h3>
       </ion-text>
     </ion-card-header>
@@ -79,11 +82,44 @@
                 height="100"
               />
             </div>
-            <p [ngStyle]="{width : '100px',height: '40px', 'overflow': 'hidden'}">{{lastSeenSong.title}}</p>
+            <ion-text color="primary">
+              <p [ngStyle]="{width : '100px',height: '40px', 'overflow': 'hidden'}">{{lastSeenSong.title}}</p>
+            </ion-text>
           </div>
         </swiper-slide>
         }
       </swiper-container>
     </ion-card-content>
+    <ion-list id="time-line">
+      <ion-list-header>
+        <ion-text color="primary">
+          <h3>
+            TimeLine
+          </h3>
+        </ion-text>
+      </ion-list-header>
+      @for(song of songs;track song.id)
+      {
+      <ion-item 
+      [button]="true"
+      [detail]="true"
+      routerLink="details"
+      details="true"
+      >
+        <ion-thumbnail
+        [style.--border-radius]="'8px'" 
+        slot="start"
+        >
+          <ion-img
+            [src]="'/assets/images/albums/'+dasherize(song.image)+'.jpg'"
+            alt=""
+          />
+        </ion-thumbnail>
+        <ion-label color="primary">
+          {{song.title}}
+        </ion-label>
+      </ion-item>
+    }
+    </ion-list>
   </ion-card>
 </ion-content>
