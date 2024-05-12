@@ -23,7 +23,7 @@
           @if(!mailIconHidden){
           <ion-icon
             slot="end"
-            src="assets/mail-outline.svg"
+            src="assets/login-page/mail-outline.svg"
             size="large"
             color="primary"
             style="margin-right: 7px"
@@ -44,7 +44,7 @@
           <ion-button slot="end" fill="clear" (click)="onShowPassword()">
             <ion-icon
               slot="icon-only"
-              [src]="(passwordAppeared)?'assets/eye-off-outline.svg':'assets/eye-outline.svg'"
+              [src]="(passwordAppeared)?'assets/login-page/eye-off-outline.svg':'assets/login-page/eye-outline.svg'"
               size="large"
               color="primary"
             ></ion-icon>
@@ -71,7 +71,7 @@
   </ion-grid>
   <ion-fab slot="fixed" horizontal="start" vertical="top">
     <ion-fab-button routerLink="/home">
-      <img src="assets/login-page/arrow-back-outline.svg" alt="" />
+      <img src="assets/login-page/arrow-back-outline.svg" alt=""  width="50" height="50"/>
     </ion-fab-button>
   </ion-fab>
 </ion-content>

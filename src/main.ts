@@ -7,6 +7,9 @@ import { routes } from './app/app.routes';
 import { AppComponent } from './app/app.component';
 import { environment } from './environments/environment';
 
+import { register } from 'swiper/element/bundle';
+register();
+
 if (environment.production) {
   enableProdMode();
 }

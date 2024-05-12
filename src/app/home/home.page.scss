@@ -1,29 +1,21 @@
-ion-content{
-  --background: var(--ion-color-primary);
-}
-ion-grid{
-  height: 100%;
-  ion-row{
-    height: 100%;
-  }
-  ion-col{
-    margin-top: 210px;
-  }
-}
-h1{
-  margin-block: 70px;
-  color: var(--ion-color-primary);
-  text-shadow: black 0px 0px 2px;
-}
 div{
-  z-index: -1;
-  width: 100%;
-  height: calc(100% - 100px);
-  overflow-y: hidden;
-  position: absolute;
-  top: 100px;
-  left: 0;
-  img#landing-page-background{
-    max-width: 300%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  img{
+    padding-right: 20px;
+  }
+  div{
+    h1{
+      margin-top: 40px;
+      font-size: 2.2rem;
+      color : var(--ion-color-primary);
+      text-shadow: var(--ion-color-dark) 0px 0px 2px;
+    }
+    hr{
+      width: 100%;
+      background-color: var(--ion-color-primary);
+    }
   }
 }
