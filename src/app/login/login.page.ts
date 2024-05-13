@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { Router } from '@angular/router';
+import { FormBuilder } from '@angular/forms';
+import { UserLoginService } from '../services/login.service';
 import {
   IonContent,
   IonHeader,
@@ -26,6 +29,7 @@ import {
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
   standalone: true,
+  providers: [UserLoginService],
   imports: [
     IonImg,
     IonBackButton,
@@ -44,15 +48,23 @@ import {
     IonTitle,
     IonToolbar,
     CommonModule,
-    FormsModule,
+    ReactiveFormsModule,
     RouterModule,
   ],
 })
 export class LoginPage implements OnInit {
   mailIconHidden: boolean = false;
   passwordAppeared: boolean = false;
-
-  constructor() {}
+  disabled : boolean = false;
+  enteredLoginData = this.formBuilder.group({
+    email: [''],
+    password: [''],
+  });
+  constructor(
+    private userLoginService: UserLoginService,
+    private formBuilder: FormBuilder,
+    private router: Router,
+  ) {}
 
   ngOnInit() {}
 
@@ -61,5 +73,27 @@ export class LoginPage implements OnInit {
   }
   onShowPassword(): void {
     this.passwordAppeared = !this.passwordAppeared;
+  }
+  onSubmit(): void {
+    console.log('ima')
+    if (!this.enteredLoginData.value || !this.enteredLoginData.value){
+      try{
+        throw new Error('invalid input date')
+      } catch {
+        console.error('something went wrong !!')
+      }
+    }
+
+    this.disabled = true;
+    this.enteredLoginData.get('email')?.disabled;
+    this.enteredLoginData.get('password')?.disabled;
+
+    this.userLoginService.userLogin({
+      email: this.enteredLoginData.value.email,
+      password: this.enteredLoginData.value.password,
+    }).subscribe(res => {
+      localStorage.setItem('token', res.token);
+      this.router.navigateByUrl('/content/main')
+    });
   }
 }

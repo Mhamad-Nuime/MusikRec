@@ -8,70 +8,83 @@
   <ion-grid>
     <ion-row class="ion-align-items-center">
       <ion-col>
-        <ion-input
-          class="ion-margin-top ion-margin-bottom"
-          type="email"
-          label="Email"
-          labelPlacement="stacked"
-          fill="outline"
-          shape="round"
-          name="user-email"
-          placeholder="xxxx@example.com"
-          [clearInput]="true"
-          (ionInput)="onEmailInput()"
-        >
-          @if(!mailIconHidden){
-          <ion-icon
-            slot="end"
-            src="assets/login-page/mail-outline.svg"
-            size="large"
-            color="primary"
-            style="margin-right: 7px"
-          ></ion-icon>
-          }
-        </ion-input>
-        <ion-input
-          class="ion-margin-top ion-margin-bottom"
-          type="password"
-          label="Password"
-          labelPlacement="stacked"
-          fill="outline"
-          shape="round"
-          name="user-password"
-          placeholder="#############"
-          [clearOnEdit]="true"
-        >
-          <ion-button slot="end" fill="clear" (click)="onShowPassword()">
+        <form [formGroup]="this.enteredLoginData" (ngSubmit)="this.onSubmit()">
+          <ion-input
+            class="ion-margin-top ion-margin-bottom"
+            type="email"
+            name="email"
+            formControlName="email"
+            label="Email"
+            labelPlacement="stacked"
+            fill="outline"
+            shape="round"
+            name="user-email"
+            placeholder="xxxx@example.com"
+            [clearInput]="true"
+            (ionInput)="onEmailInput()"
+            [autocomplete]="true"
+          >
+            @if(!mailIconHidden){
             <ion-icon
-              slot="icon-only"
-              [src]="(passwordAppeared)?'assets/login-page/eye-off-outline.svg':'assets/login-page/eye-outline.svg'"
+              slot="end"
+              src="assets/login-page/mail-outline.svg"
               size="large"
               color="primary"
+              style="margin-right: 7px"
             ></ion-icon>
-          </ion-button>
-        </ion-input>
-        <ion-text color="primary">
-          <p class="forget-your-password ion-text-right">
-            Forget You Password?
+            }
+          </ion-input>
+          <ion-input
+            class="ion-margin-top ion-margin-bottom"
+            type="password"
+            name="password"
+            formControlName="password"
+            label="Password"
+            labelPlacement="stacked"
+            fill="outline"
+            shape="round"
+            name="user-password"
+            placeholder="#############"
+            [clearOnEdit]="true"
+          >
+            <ion-button slot="end" fill="clear" (click)="onShowPassword()">
+              <ion-icon
+                slot="icon-only"
+                [src]="(passwordAppeared)?'assets/login-page/eye-off-outline.svg':'assets/login-page/eye-outline.svg'"
+                size="large"
+                color="primary"
+              ></ion-icon>
+            </ion-button>
+          </ion-input>
+          <ion-text color="primary">
+            <p class="forget-your-password ion-text-right">
+              Forget You Password?
+            </p>
+          </ion-text>
+          <ion-button
+            type="submit"
+            expand="block"
+            fill="solid"
+            mode="ios"
+            class="ion-margin-top ion-padding-top"
+            [disabled]="this.disabled"
+            >Send</ion-button
+          >
+          <p class="ion-text-center ion-padding-top">
+            Don't have an account? <a routerLink="/signup">Signup</a>
           </p>
-        </ion-text>
-        <ion-button
-          expand="block"
-          fill="solid"
-          mode="ios"
-          class="ion-margin-top ion-padding-top"
-          routerLink=""
-          >Send</ion-button
-        >
-        <p class="ion-text-center ion-padding-top">
-          Don't have an account? <a routerLink="/signup">Signup</a>
-        </p>
+        </form>
       </ion-col>
     </ion-row>
   </ion-grid>
   <ion-fab slot="fixed" horizontal="start" vertical="top">
     <ion-fab-button routerLink="/home">
-      <img src="assets/login-page/arrow-back-outline.svg" alt=""  width="50" height="50"/>
+      <img
+        src="assets/login-page/arrow-back-outline.svg"
+        alt=""
+        width="50"
+        height="50"
+      />
     </ion-fab-button>
   </ion-fab>
 </ion-content>
