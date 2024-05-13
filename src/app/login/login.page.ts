@@ -93,7 +93,8 @@ export class LoginPage implements OnInit {
       password: this.enteredLoginData.value.password,
     }).subscribe(res => {
       localStorage.setItem('token', res.token);
-      this.router.navigateByUrl('/content/main')
+      this.router.navigateByUrl('/content/main');
+      console.log(`getting Token sucessfully (Token : ${localStorage.getItem('token')} )`);
     });
   }
 }
