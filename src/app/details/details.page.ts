@@ -17,7 +17,7 @@ import {
   IonLabel,
 } from '@ionic/angular/standalone';
 import { ActivatedRoute } from '@angular/router';
-import { ImageFadeDirective } from '../image-fade.directive';
+import { ImageFadeDirective } from '../directives/image-fade.directive';
 import albums from '../../assets/mockdata/albums/bornToDie.json';
 
 @Component({
