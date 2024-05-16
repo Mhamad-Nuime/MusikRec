@@ -1,6 +1,8 @@
 // For information on how to create your own theme, please see:
 // http://ionicframework.com/docs/theming/
 :root, :root.md, :root.ios {
+	//aditional background color for the card and the progress bar in the content page
+	--ion-color-third: rgb(136, 174, 228);
   // background and text color
   --ion-background-color: #E5EAFF;
 	--ion-background-color-rgb: 229,234,255;
