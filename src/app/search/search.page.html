@@ -1,14 +1,15 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>search</ion-title>
+  <ion-toolbar class="ion-text-center" color="primary">
+    Browse Over than 1 milion songs
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">search</ion-title>
+    <ion-toolbar class="ion-text-center" color="primary">
+      Browse Over than 1 milion songs
     </ion-toolbar>
   </ion-header>
-  <p>search</p>
+  <ion-searchbar color="primary" name="q" value="" inputmode="search" animated placeholder="search" [debounce]="2000"></ion-searchbar>
+
 </ion-content>

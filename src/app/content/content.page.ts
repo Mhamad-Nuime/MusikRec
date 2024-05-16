@@ -12,6 +12,7 @@ import {
   libraryOutline,
   playCircle,
   pauseCircle,
+  close
 } from 'ionicons/icons';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -63,6 +64,7 @@ export class ContentPage {
       libraryOutline,
       playCircle,
       pauseCircle,
+      close
     });
   }
 

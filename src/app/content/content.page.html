@@ -1,5 +1,5 @@
 <div class="player">
-  <ion-item>
+  <ion-item color="primary">
     <ion-thumbnail slot="start">
       <img src="/assets/images/albums/when-we-all-fall-asleep.jpg" />
     </ion-thumbnail>
@@ -8,19 +8,21 @@
         <p>All the Good Girls Go to Hell</p>
         <span>Billie Eilish</span>
         <div class="progress-bar">
-          <input
-            #progress
-            id="progress-range"
-            type="range"
-            name="progress"
-            value="50"
-          />
+          <input id="progress-range" type="range" name="progress" value="50" />
         </div>
       </ion-text>
     </ion-label>
     <ion-button (click)="whenSmallMediaPlayerButtonIsClicked()" fill="clear">
       <ion-icon
         [name]="this.isPaused ? 'play-circle' : 'pause-circle'"
+        color="light"
+        size="large"
+        slot="icon-only"
+      ></ion-icon>
+    </ion-button>
+    <ion-button fill="clear">
+      <ion-icon
+        name="close"
         color="light"
         size="large"
         slot="icon-only"
