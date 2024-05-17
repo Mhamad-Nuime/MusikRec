@@ -1,12 +1,12 @@
 <ion-header [translucent]="true">
   <ion-toolbar color="primary">
-    <ion-title class="ion-text-center" > MusicRec </ion-title>
+    <ion-title class="ion-text-center"> MusicRec </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
-    <ion-toolbar >
+    <ion-toolbar>
       <ion-title class="ion-text-center" color="primary">MusicRec</ion-title>
     </ion-toolbar>
   </ion-header>
@@ -35,7 +35,7 @@
           autoplay-disable-on-interaction="false"
         >
           @for(song of songs; track song.id){
-          <swiper-slide>
+          <swiper-slide (click)="playSong()">
             <div class="slide-flex">
               <div class="img-wrap">
                 <img
@@ -52,16 +52,18 @@
         </swiper-container>
       </div>
     </ion-card-content>
-  </ion-card >
-  <ion-card class="ion-no-margin" id="history" [ngStyle]="{
+  </ion-card>
+  <ion-card
+    class="ion-no-margin"
+    id="history"
+    [ngStyle]="{
     '--background': 'var(ion-color-secondary)',
     '--color': 'var(ion-color-primary)'
-  }">
+  }"
+  >
     <ion-card-header>
       <ion-text color="primary">
-        <h3>
-          History 
-        </h3>
+        <h3>History</h3>
       </ion-text>
     </ion-card-header>
     <ion-card-content>
@@ -73,7 +75,7 @@
       >
         @for(lastSeenSong of lastSeensSongs;track lastSeenSong.id){
         <swiper-slide>
-          <div class="last-seen-slide-wrap">
+          <div class="last-seen-slide-wrap" (click)="playSong()">
             <div class="img-wrap">
               <img
                 [src]="'/assets/images/albums/'+dasherize(lastSeenSong.image)+'.jpg'"
@@ -83,7 +85,11 @@
               />
             </div>
             <ion-text color="primary">
-              <p [ngStyle]="{width : '100px',height: '40px', 'overflow': 'hidden'}">{{lastSeenSong.title}}</p>
+              <p
+                [ngStyle]="{width : '100px',height: '40px', 'overflow': 'hidden'}"
+              >
+                {{lastSeenSong.title}}
+              </p>
             </ion-text>
           </div>
         </swiper-slide>
@@ -93,33 +99,36 @@
     <ion-list id="time-line">
       <ion-list-header>
         <ion-text color="primary">
-          <h3>
-            TimeLine
-          </h3>
+          <h3>TimeLine</h3>
         </ion-text>
       </ion-list-header>
-      @for(song of songs;track song.id)
-      {
-      <ion-item 
-      [button]="true"
-      [detail]="true"
-      routerLink="details"
-      details="true"
-      >
-        <ion-thumbnail
-        [style.--border-radius]="'8px'" 
-        slot="start"
-        >
+      @for(song of songs;track song.id) {
+      <ion-item [id]="$index">
+        <ion-thumbnail [style.--border-radius]="'8px'" slot="start" (click)="playSong()">
           <ion-img
             [src]="'/assets/images/albums/'+dasherize(song.image)+'.jpg'"
             alt=""
           />
         </ion-thumbnail>
-        <ion-label color="primary">
-          {{song.title}}
-        </ion-label>
+        <ion-label color="primary" (click)="playSong()"> {{song.title}} </ion-label>
+        <ion-button
+          slot="end"
+          fill="clear"
+          color="secondary"
+          routerLink="details"
+        >
+          <ion-icon
+            slot="icon-only"
+            size="large"
+            color="primary"
+            name="arrow-forward-circle"
+          ></ion-icon>
+        </ion-button>
       </ion-item>
-    }
+      }
+      <ion-infinite-scroll class="ion-margin-vertical">
+        <ion-infinite-scroll-content loading-spinner="circular"></ion-infinite-scroll-content>
+      </ion-infinite-scroll>
     </ion-list>
   </ion-card>
 </ion-content>

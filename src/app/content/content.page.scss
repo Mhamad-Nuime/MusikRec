@@ -18,6 +18,11 @@ ion-item {
   position: absolute;
   bottom: 60px;
   width: 100%;
+  z-index: 1;
+  perspective: 2px;
+  perspective-origin: center;
+  -webkit-animation: slide-left 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+          animation: slide-left 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
   ion-item {
     --background: var(--ion-color-third);
     --color: var(--ion-text-color-step-200);
@@ -44,4 +49,28 @@ ion-label {
 }
 ion-button {
   --background: transparent;
+}
+@-webkit-keyframes slide-left {
+  0% {
+    -webkit-transform: translateY(100px);
+            transform: translateY(100px);
+            opacity: 0.5;
+  }
+  100% {
+    -webkit-transform: translateY(0px);
+            transform: translateY(0px);
+            opacity: 1;
+  }
+}
+@keyframes slide-left {
+  0% {
+    -webkit-transform: translateY(100px);
+            transform: translateY(100px);
+            opacity: 0.5;
+  }
+  100% {
+    -webkit-transform: translateY(0px);
+            transform: translateY(0px);
+            opacity: 1;
+  }
 }
