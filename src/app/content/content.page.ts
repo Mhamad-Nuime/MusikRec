@@ -26,14 +26,16 @@ import {
   IonCol,
   IonButton,
   IonItem,
-  IonThumbnail, IonText, IonProgressBar } from '@ionic/angular/standalone';
+  IonThumbnail, IonText, IonProgressBar, IonRippleEffect } from '@ionic/angular/standalone';
+import { MediaPlayerAppearanceStateService } from '../services/media-player-appearance-state';
 
 @Component({
   selector: 'app-content',
   templateUrl: './content.page.html',
   styleUrls: ['./content.page.scss'],
   standalone: true,
-  imports: [IonProgressBar, IonText, 
+  providers: [MediaPlayerAppearanceStateService],
+  imports: [IonRippleEffect, IonProgressBar, IonText, 
     IonItem,
     IonButton,
     IonCol,
@@ -54,7 +56,9 @@ export class ContentPage {
   isPaused: boolean = false;
   currentTrackDuration: number = 42;
 
-  constructor() {
+  constructor(
+    public mediaPlayerAppearanceState : MediaPlayerAppearanceStateService
+  ) {
     addIcons({
       home,
       homeOutline,
@@ -76,9 +80,6 @@ export class ContentPage {
   }
   whenSmallMediaPlayerButtonIsClicked() : void {
     this.pauseOrPlay();
-  }
-  showMediaPlayer() : void {
-    
   }
   seekTo(event: any) {
     const progressBar = event.target;

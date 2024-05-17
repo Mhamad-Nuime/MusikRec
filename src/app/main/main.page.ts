@@ -12,12 +12,15 @@ import {
   IonButton,
   IonIcon,
 } from '@ionic/angular/standalone';
-
+import {
+  arrowForwardCircle
+} from 'ionicons/icons'
 
 import recentlyPlayed from '../../assets/mockdata/recentlyPlayed.json';
 import heavyRotation from '../../assets/mockdata/heavyRotation.json';
 import jumpBackIn from '../../assets/mockdata/jumpBackIn.json';
-import { SwiperContainer } from 'swiper/element';
+import { addIcons } from 'ionicons';
+import { MediaPlayerAppearanceStateService } from '../services/media-player-appearance-state';
 
 @Component({
   selector: 'app-main',
@@ -42,7 +45,13 @@ import { SwiperContainer } from 'swiper/element';
 export class MainPage implements OnInit {
   songs = recentlyPlayed;
   lastSeensSongs = heavyRotation;
-  constructor() {}
+  constructor(
+    public mediaPlayerAppearanceState : MediaPlayerAppearanceStateService
+  ) {
+    addIcons({
+      arrowForwardCircle
+    });
+  }
 
   ngOnInit() {
   }
@@ -67,4 +76,7 @@ export class MainPage implements OnInit {
         return (index !== 0 ? '-' : '') + char.toLowerCase();
       });
     };
+  playSong() : void {
+    this.mediaPlayerAppearanceState.displayMediaPlayer();
+  }
 }

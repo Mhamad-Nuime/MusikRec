@@ -1,14 +1,68 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
+  <ion-toolbar class="ion-text-center" color="primary">
     <ion-title>playlists</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
-    <ion-toolbar>
+    <ion-toolbar class="ion-text-center" color="primary">
       <ion-title size="large">playlists</ion-title>
     </ion-toolbar>
   </ion-header>
-  <p>playlists</p>
+  <div id="playlists-container" class="playlists-wrap">
+    @for(playlist of playlists ; track playlist.playlist_id){
+      <div #p class="playlist-wrap" [id]="playlist.playlist_id" (click)="displayPlaylistContent(p)">
+        <div class="image-wrap">
+          <img [src]="playlist.content.songs[0].song_url" width="125" height="100"/>
+        </div>
+        <div class="title-wrap">
+          <ion-text color="primary">
+            <p>{{playlist.playlist_name}}</p>
+          </ion-text>
+        </div>
+      </div>
+    }
+  </div>
+  @if(displayCurrentPlaylist && currentPlaylist)
+  {
+  <div class="playlist-content-container">
+    <ion-list id="playlist-content">
+      <ion-list-header>
+        <ion-toolbar>
+          <ion-text color="primary">
+            <h3>{{this.currentPlaylist.playlist_name}}</h3>
+          </ion-text>
+          <ion-button fill="clear" slot="end" size="large" (click)="hideplaylistContent()">
+            <ion-icon name="close-circle-outline" slot="icon-only"></ion-icon>
+          </ion-button>
+        </ion-toolbar>
+      </ion-list-header>
+      @for(song of currentPlaylist.content.songs;track song.id) {
+      <ion-item [id]="$index">
+        <ion-thumbnail [style.--border-radius]="'8px'" slot="start" (click)="playSong()">
+          <ion-img
+            [src]="song.song_url"
+            alt=""
+          />
+        </ion-thumbnail>
+        <ion-label color="primary" (click)="playSong()"> {{song.song_name}} </ion-label>
+        <ion-button
+          slot="end"
+          fill="clear"
+          color="secondary"
+          routerLink="details"
+        >
+          <ion-icon
+            slot="icon-only"
+            size="large"
+            color="primary"
+            name="arrow-forward-circle"
+          ></ion-icon>
+        </ion-button>
+      </ion-item>
+      }
+    </ion-list>
+  </div>
+  }
 </ion-content>
