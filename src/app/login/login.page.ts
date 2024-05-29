@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { Router } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
@@ -55,15 +55,17 @@ import {
 export class LoginPage implements OnInit {
   mailIconHidden: boolean = false;
   passwordAppeared: boolean = false;
-  disabled : boolean = false;
-  enteredLoginData = this.formBuilder.group({
-    email: [''],
+  disabled: boolean = false;
+
+  loginData = this.formBuilder.group({
+    email: ['', [Validators.required]],
     password: [''],
   });
+
   constructor(
     private userLoginService: UserLoginService,
     private formBuilder: FormBuilder,
-    private router: Router,
+    private router: Router
   ) {}
 
   ngOnInit() {}
@@ -75,26 +77,31 @@ export class LoginPage implements OnInit {
     this.passwordAppeared = !this.passwordAppeared;
   }
   onSubmit(): void {
-    console.log('ima')
-    if (!this.enteredLoginData.value || !this.enteredLoginData.value){
-      try{
-        throw new Error('invalid input date')
+    if (!this.loginData.value || !this.loginData.value) {
+      try {
+        throw new Error('invalid input date');
       } catch {
-        console.error('something went wrong !!')
+        console.error('something went wrong !!');
       }
     }
 
-    this.disabled = true;
-    this.enteredLoginData.get('email')?.disabled;
-    this.enteredLoginData.get('password')?.disabled;
+    this.loginData.get('email')?.disabled;
+    this.loginData.get('password')?.disabled;
 
-    this.userLoginService.userLogin({
-      email: this.enteredLoginData.value.email,
-      password: this.enteredLoginData.value.password,
-    }).subscribe(res => {
-      localStorage.setItem('token', res.token);
-      this.router.navigateByUrl('/content/main');
-      console.log(`getting Token sucessfully (Token : ${localStorage.getItem('token')} )`);
-    });
+    this.userLoginService
+      .userLogin({
+        email: this.loginData.value.email,
+        password: this.loginData.value.password,
+      })
+      .subscribe((res) => {
+        localStorage.setItem('token', res.token);
+        this.router.navigateByUrl('/content/main');
+        console.log(
+          `getting Token sucessfully (Token : ${localStorage.getItem(
+            'token'
+          )}`
+        );
+      });
+    this.disabled = this.loginData.invalid;
   }
 }

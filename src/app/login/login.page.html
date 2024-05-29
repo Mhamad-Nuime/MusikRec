@@ -8,7 +8,7 @@
   <ion-grid>
     <ion-row class="ion-align-items-center">
       <ion-col>
-        <form [formGroup]="this.enteredLoginData" (ngSubmit)="this.onSubmit()">
+        <form [formGroup]="this.loginData" (ngSubmit)="this.onSubmit()">
           <ion-input
             class="ion-margin-top ion-margin-bottom"
             type="email"
@@ -23,6 +23,8 @@
             [clearInput]="true"
             (ionInput)="onEmailInput()"
             [autocomplete]="true"
+            [required]="true"
+            pattern="^\w{1,30}@[a-z]{1,10}.com$"
           >
             @if(!mailIconHidden){
             <ion-icon
@@ -46,6 +48,9 @@
             name="user-password"
             placeholder="#############"
             [clearOnEdit]="true"
+            [required]="true"
+            pattern="^[A-Z][a-zA-Z0-9]{7,20}$"
+
           >
             <ion-button slot="end" fill="clear" (click)="onShowPassword()">
               <ion-icon
