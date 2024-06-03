@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, WritableSignal, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { home } from 'ionicons/icons';
+import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import {
   IonContent,
   IonHeader,
@@ -18,6 +17,7 @@ import {
   IonFabButton,
 } from '@ionic/angular/standalone';
 import { RouterModule } from '@angular/router';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.page.html',
@@ -38,18 +38,32 @@ import { RouterModule } from '@angular/router';
     IonTitle,
     IonToolbar,
     CommonModule,
-    FormsModule,
+    ReactiveFormsModule,
     RouterModule,
   ],
 })
-export class SignupPage implements OnInit {
-  mailIconHidden: boolean = false;
-
-  constructor() {}
-
-  ngOnInit() {}
-
-  onEmailInput(): void {
-    this.mailIconHidden = true;
+export class SignupPage implements OnDestroy {
+  signupData = this.fb.group({
+    firstName: ['', [Validators.required, Validators.pattern('^[a-zA-z][a-z]{3,10}$')]],
+    lastName: ['', [Validators.required, Validators.pattern('^[a-zA-z][a-z]{3,10}$')]],
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', [Validators.required, Validators.pattern('^[a-z].{7,20}$')]],
+  });
+  disableSubmitButton: WritableSignal<boolean> = signal<boolean>(false);
+  sub: Subscription;
+  constructor(
+    private fb: FormBuilder,
+  ) {
+    this.sub = this.signupData.valueChanges.subscribe(()=> {
+      this.disableSubmitButton.set(this.signupData.invalid);
+    });
   }
+
+  ngOnDestroy() : void {
+    this.sub.unsubscribe();
+  }
+  onSubmit() : void {
+    console.log('signup to server is in progress......');
+  }
+
 }
