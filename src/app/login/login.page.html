@@ -21,21 +21,8 @@
             name="user-email"
             placeholder="xxxx@example.com"
             [clearInput]="true"
-            (ionInput)="onEmailInput()"
             [autocomplete]="true"
-            [required]="true"
-            pattern="^\w{1,30}@[a-z]{1,10}.com$"
-          >
-            @if(!mailIconHidden){
-            <ion-icon
-              slot="end"
-              src="assets/login-page/mail-outline.svg"
-              size="large"
-              color="primary"
-              style="margin-right: 7px"
-            ></ion-icon>
-            }
-          </ion-input>
+          ></ion-input>
           <ion-input
             class="ion-margin-top ion-margin-bottom"
             type="password"
@@ -48,18 +35,8 @@
             name="user-password"
             placeholder="#############"
             [clearOnEdit]="true"
-            [required]="true"
-            pattern="^[A-Z][a-zA-Z0-9]{7,20}$"
-
           >
-            <ion-button slot="end" fill="clear" (click)="onShowPassword()">
-              <ion-icon
-                slot="icon-only"
-                [src]="(passwordAppeared)?'assets/login-page/eye-off-outline.svg':'assets/login-page/eye-outline.svg'"
-                size="large"
-                color="primary"
-              ></ion-icon>
-            </ion-button>
+            <ion-input-password-toggle slot="end"></ion-input-password-toggle>
           </ion-input>
           <ion-text color="primary">
             <p class="forget-your-password ion-text-right">
@@ -72,7 +49,7 @@
             fill="solid"
             mode="ios"
             class="ion-margin-top ion-padding-top"
-            [disabled]="this.disabled"
+            [disabled]="this.disabled()"
             >Send</ion-button
           >
           <p class="ion-text-center ion-padding-top">
