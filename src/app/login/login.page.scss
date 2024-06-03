@@ -20,3 +20,6 @@
 ion-fab {
   top: 40px;
 }
+ion-button::part(native){
+  padding : 0;
+}
