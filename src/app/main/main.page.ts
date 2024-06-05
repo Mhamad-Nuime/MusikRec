@@ -11,6 +11,7 @@ import {
   IonCol,
   IonButton,
   IonIcon,
+  IonRippleEffect,
 } from '@ionic/angular/standalone';
 import {
   arrowForwardCircle
@@ -36,6 +37,7 @@ import { MediaPlayerAppearanceStateService } from '../services/media-player-appe
     IonHeader,
     IonTitle,
     IonToolbar,
+    IonRippleEffect,
     CommonModule,
     FormsModule,
     RouterModule

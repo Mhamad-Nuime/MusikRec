@@ -1,3 +1,6 @@
+ion-content{
+    --background: linear-gradient(200deg, rgba(21,95,203,1) 0%, rgba(191,58,223,1) 28%, rgba(227,122,236,1) 100%);
+}
 .header {
   margin-top: 30px;
   width: 100;
@@ -22,4 +25,9 @@ ion-fab {
 }
 ion-button::part(native){
   padding : 0;
+}
+ion-input{
+  --highlight-color-focused: white;
+  --highlight-color-invalid: rgb(154, 0, 0);
+  --highlight-color-valid: rgb(0, 255, 0);
 }

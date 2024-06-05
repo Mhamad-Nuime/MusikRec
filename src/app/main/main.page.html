@@ -1,15 +1,29 @@
 <ion-header [translucent]="true">
-  <ion-toolbar color="primary">
+  <ion-toolbar>
     <ion-title class="ion-text-center"> MusicRec </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
+  <ion-header collapse="condense"  [translucent]="true">
     <ion-toolbar>
-      <ion-title class="ion-text-center" color="primary">MusicRec</ion-title>
+      <ion-title class="ion-text-center">MusicRec</ion-title>
     </ion-toolbar>
   </ion-header>
+  <div class="link-wrapper">
+    <button class="ion-activatable">
+      Trends
+      <ion-ripple-effect></ion-ripple-effect>
+    </button>
+    <button class="ion-activatable">
+      History
+      <ion-ripple-effect></ion-ripple-effect>
+      </button>
+    <button class="ion-activatable active">
+      Liked
+      <ion-ripple-effect></ion-ripple-effect>
+    </button>
+  </div>
 
   <ion-card id="recommandations">
     <ion-card-header>
@@ -62,7 +76,7 @@
   }"
   >
     <ion-card-header>
-      <ion-text color="primary">
+      <ion-text>
         <h3>History</h3>
       </ion-text>
     </ion-card-header>
@@ -84,7 +98,7 @@
                 height="100"
               />
             </div>
-            <ion-text color="primary">
+            <ion-text>
               <p
                 [ngStyle]="{width : '100px',height: '40px', 'overflow': 'hidden'}"
               >
@@ -98,7 +112,7 @@
     </ion-card-content>
     <ion-list id="time-line">
       <ion-list-header>
-        <ion-text color="primary">
+        <ion-text>
           <h3>TimeLine</h3>
         </ion-text>
       </ion-list-header>
@@ -110,17 +124,16 @@
             alt=""
           />
         </ion-thumbnail>
-        <ion-label color="primary" (click)="playSong()"> {{song.title}} </ion-label>
+        <ion-label (click)="playSong()"> {{song.title}} </ion-label>
         <ion-button
           slot="end"
           fill="clear"
-          color="secondary"
           routerLink="details"
         >
           <ion-icon
             slot="icon-only"
             size="large"
-            color="primary"
+            color="secondary"
             name="arrow-forward-circle"
           ></ion-icon>
         </ion-button>
