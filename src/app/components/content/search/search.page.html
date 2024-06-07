@@ -1,0 +1,17 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title class="ion-text-center"> Search </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-searchbar
+  name="query"
+  value=""
+  inputmode="search"
+  animated="true"
+  placeholder="search"
+  [debounce]="2000"
+></ion-searchbar>
+<!-- put the list here -->
+</ion-content>

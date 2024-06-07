@@ -1,0 +1,24 @@
+ion-content{
+  --background: linear-gradient(116deg, #1564cb,#df3aa5,#f388fc);
+}
+div{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  img{
+    padding-right: 20px;
+  }
+  div{
+    h1{
+      margin-top: 40px;
+      font-size: 2.2rem;
+      color : white;
+      text-shadow: var(--ion-color-dark) 0px 0px 2px;
+    }
+    hr{
+      width: 100%;
+      background-color: white;
+    }
+  }
+}

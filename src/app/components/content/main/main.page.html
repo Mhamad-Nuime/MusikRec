@@ -1,0 +1,41 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title class="ion-text-center"> MusicRec </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <nav class="link-wrapper">
+    <button
+      type="button"
+      class="ion-activatable"
+      routerLink="trends"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{exact: true}"
+    >
+      Trends
+      <ion-ripple-effect></ion-ripple-effect>
+    </button>
+    <button
+      type="button"
+      class="ion-activatable"
+      routerLink="history"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{exact: true}"
+    >
+      History
+      <ion-ripple-effect></ion-ripple-effect>
+    </button>
+    <button
+      type="button"
+      class="ion-activatable"
+      routerLink="liked"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{exact: true}"
+    >
+      Liked
+      <ion-ripple-effect></ion-ripple-effect>
+    </button>
+  </nav>
+  <router-outlet></router-outlet>
+</ion-content>

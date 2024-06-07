@@ -1,0 +1,39 @@
+ion-card {
+  --background: transparent;
+  --color: white;
+}
+ion-card {
+  .swiper-wrap {
+    swiper-slide {
+      width: fit-content;
+      .img-wrap {
+        position: relative;
+      }
+      p {
+        position: absolute;
+        bottom: 2px;
+        right: 0;
+        left: 0;
+        width: 150px;
+        height: 50px;
+        border-radius: 0px 0px 10px 10px;
+        background-color: rgba(36, 156, 243, 0.299);
+      }
+    }
+  }
+}
+
+.img-wrap {
+  width: fit-content;
+  img {
+    border-radius: 10px;
+    box-shadow: rgb(44, 42, 42) 0px 0px 3px;
+  }
+}
+ion-list{
+  background: transparent !important;
+  box-shadow: none;
+}
+ion-item{
+  --background: transparent !important;
+}

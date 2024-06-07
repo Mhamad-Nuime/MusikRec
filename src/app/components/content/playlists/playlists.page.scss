@@ -1,0 +1,67 @@
+ion-header {
+  border-radius: 20px;
+  ion-toolbar {
+    --background: transparent;
+    backdrop-filter: blur(20px);
+  }
+}
+ion-content {
+  --background: linear-gradient(
+    230deg,
+    rgba(21, 95, 203, 1) 0%,
+    rgba(191, 58, 223, 1) 60%,
+    rgb(217, 83, 230) 100%
+  );
+}
+div.clickable-part-of-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 30px;
+  .image-wrap {
+    position: relative;
+    img {
+      border-radius: 16px;
+      box-shadow: var(--ion-color-dark) 0px 0px 4px;
+    }
+  }
+  .image-wrap::before {
+    content: "";
+    z-index: -1;
+    width: 60px;
+    height: 70px;
+    background-color: rgba(18, 144, 179, 0.733);
+    position: absolute;
+    bottom: 5px;
+    left: 25px;
+    border-radius: 16px;
+    border: 1px solid var(--ion-color-secondary);
+  }
+  .image-wrap::after {
+    content: "";
+    z-index: -2;
+    width: 40px;
+    height: 60px;
+    background-color: rgba(247, 247, 247, 0.733);
+    position: absolute;
+    bottom: 7px;
+    left: 50px;
+    border-radius: 16px;
+    border: 1px solid var(--ion-color-secondary);
+  }
+}
+ion-list {
+  background: transparent !important;
+  box-shadow: none;
+  width: 100%;
+}
+ion-item {
+  --background: transparent !important;
+  --min-height: 100px;
+}
+// action sheet style
+ion-action-sheet {
+  --background: #8a35da;
+  --color: #fff;
+  --button-color: #fff;
+}
