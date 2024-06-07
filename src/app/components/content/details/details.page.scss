@@ -1,0 +1,25 @@
+ion-header{
+  border-radius: 20px;
+  --background: transparent;
+  ion-toolbar{
+    --background: transparent ;
+    backdrop-filter: blur(20px);
+  }
+}
+
+ion-content{
+  --background: linear-gradient(116deg, #1564cb,#df3aa5,#f388fc);
+}
+
+.image-box {
+  position: sticky;
+  top: 20px;
+  z-index: 1;
+  padding-left: 15%;
+  padding-right: 15%;
+  padding-block: 5%;
+  backdrop-filter: blur(5px);
+  img{
+    border-radius: 8px;
+  }
+}

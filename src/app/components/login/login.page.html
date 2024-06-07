@@ -1,0 +1,79 @@
+<ion-content [fullscreen]="true">
+  <div class="header">
+    <div class="header-logo-container">
+      <img id="login-header" src="assets/login-page/Guitar button.svg" alt="" />
+      <h1 class="ion-text-center">Login</h1>
+    </div>
+  </div>
+  <ion-grid>
+    <ion-row class="ion-align-items-center">
+      <ion-col>
+        <form [formGroup]="this.loginData" (ngSubmit)="this.onSubmit()">
+          <ion-input
+            class="ion-margin-top ion-margin-bottom"
+            type="email"
+            name="email"
+            formControlName="email"
+            label="Email"
+            labelPlacement="stacked"
+            fill="outline"
+            shape="round"
+            name="user-email"
+            placeholder="xxxx@example.com"
+            [clearInput]="true"
+            [autocomplete]="true"
+          ></ion-input>
+          <ion-input
+            class="ion-margin-top ion-margin-bottom"
+            type="password"
+            name="password"
+            formControlName="password"
+            label="Password"
+            labelPlacement="stacked"
+            fill="outline"
+            shape="round"
+            name="user-password"
+            placeholder="#############"
+            [clearOnEdit]="true"
+          >
+            <ion-input-password-toggle slot="end"></ion-input-password-toggle>
+          </ion-input>
+          <ion-text color="primary">
+            <p class="forget-your-password ion-text-right">
+              Forget You Password?
+            </p>
+          </ion-text>
+          <ion-button
+            type="submit"
+            expand="block"
+            fill="solid"
+            mode="ios"
+            class="ion-margin-top ion-padding-top"
+            [disabled]="this.disabled()"
+            >Send</ion-button
+          >
+          <p class="ion-text-center ion-padding-top">
+            Don't have an account? <a routerLink="/signup">Signup</a>
+          </p>
+        </form>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-fab slot="fixed" horizontal="start" vertical="top">
+    <ion-fab-button routerLink="/home">
+      <img
+        src="assets/login-page/arrow-back-outline.svg"
+        alt=""
+        width="50"
+        height="50"
+      />
+    </ion-fab-button>
+  </ion-fab>
+  @if(showErrorMessage()){
+    <div class="error-messages-box">
+      <ion-text>
+        {{showErrorMessage()}}
+      </ion-text>
+    </div>
+  }
+</ion-content>

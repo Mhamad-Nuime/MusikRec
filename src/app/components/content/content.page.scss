@@ -1,0 +1,89 @@
+ion-tab-bar {
+  position: relative;
+  border-radius: 15px;
+  margin-inline: 5px;
+  margin-bottom: 10px;
+  --background: transparent;
+  backdrop-filter: blur(30px) opacity(1);
+  box-shadow: 0px 1px 7px -2px rgb(0, 0, 0);
+}
+ion-item {
+  z-index: 10;
+  --border-width: 0.1px;
+  --border-color: rgb(192, 188, 188);
+  --border-radius: 16px;
+
+  p {
+    overflow: hidden;
+    text-wrap: nowrap;
+  }
+}
+.player {
+  padding-inline: 5px;
+  position: absolute;
+  bottom: 80px;
+  width: 100%;
+  border-radius: 20px;
+  backdrop-filter: blur(20px);
+  z-index: 10;
+  box-shadow: 0px 1px 7px -2px rgb(0, 0, 0);
+  perspective: 2px;
+  perspective-origin: center;
+  -webkit-animation: slide-left 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  animation: slide-left 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  ion-item {
+    --color: white;
+    --background: rgb(255,255,255,0.2) !important;
+    .progress-bar input#progress-range {
+      width: 100%;
+      margin-bottom: 5px;
+      height: 4px;
+    }
+  }
+  ion-thumbnail {
+    --border-radius: 8px;
+  }
+}
+ion-tab-button {
+  --color-selected: black;
+}
+
+ion-icon {
+  color: var(--ion-color-secondary);
+}
+ion-button {
+  --background: transparent;
+}
+
+// action sheet style
+ion-action-sheet{
+  --background: #8a35da;
+  --color: #fff;
+  --button-color: #fff;
+}
+
+
+@-webkit-keyframes slide-left {
+  0% {
+    -webkit-transform: translateX(100px);
+    transform: translateX(100px);
+    opacity: 0.9;
+  }
+  100% {
+    -webkit-transform: translateX(0px);
+    transform: translateX(0px);
+    opacity: 1;
+  }
+}
+@keyframes slide-left {
+  0% {
+    -webkit-transform: translateX(100px);
+    transform: translateX(100px);
+    opacity: 0.9;
+  }
+  100% {
+    -webkit-transform: translateX(0px);
+    transform: translateX(0px);
+    opacity: 1;
+  }
+}

@@ -1,0 +1,38 @@
+<ion-list id="playlist-content">
+  <ion-list-header>
+    <ion-title>
+      {{this.playlist.playlist_name}}
+    </ion-title>
+    <ion-button style="margin-right: 30px;" (click)="backToPlaylistsPage()">
+      <ion-icon color='secondary' slot="icon-only" size="large" name="arrow-forward"></ion-icon>
+    </ion-button>
+  </ion-list-header>
+  @for(song of playlist.content.songs;track song.id) {
+  <ion-item [id]="$index">
+    <ion-thumbnail
+      [style.--border-radius]="'8px'"
+      slot="start"
+      (click)="playSong()"
+    >
+      <ion-img [src]="song.song_url" alt="" />
+    </ion-thumbnail>
+    <ion-label (click)="playSong()">
+      {{song.song_name}}
+    </ion-label>
+    <ion-button slot="end" fill="clear" (click)="options(true)">
+      <ion-icon
+        slot="icon-only"
+        size="large"
+        color="secondary"
+        name="ellipsis-vertical"
+        size="small"
+      ></ion-icon>
+    </ion-button>
+  </ion-item>
+  }
+</ion-list>
+<ion-action-sheet
+  [isOpen]="optionStatus"
+  header="Actions"
+  [buttons]="actionSheetButtons"
+></ion-action-sheet>

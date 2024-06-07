@@ -1,0 +1,13 @@
+ion-list{
+  background: transparent !important;
+  box-shadow: none;
+}
+ion-item{
+  --background: transparent !important;
+}
+// action sheet style
+ion-action-sheet{
+  --background: #8a35da;
+  --color: #fff;
+  --button-color: #fff;
+}
