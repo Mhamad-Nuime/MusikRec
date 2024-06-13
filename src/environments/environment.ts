@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  springBootBaseUrl: 'http://localhost:8080/',
+  springBootBaseUrl: 'http://192.168.1.11:8080/'
 };
 
 /*

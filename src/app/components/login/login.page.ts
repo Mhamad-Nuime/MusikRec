@@ -63,13 +63,11 @@ import { LoginForm } from 'src/app/models/userBasedModels/login/loginForm';
     RouterModule,
   ],
 })
-export class LoginPage implements OnDestroy {
+export class LoginPage {
   //this prop is responsable for disabling/enabling the submit button until the validation condations get met
   disabled: WritableSignal<boolean>;
   
   showErrorMessage: WritableSignal<string | null> = signal(null);
-  //it get used to unsubscribe the valueChanges Observable
-  valueChangesSubcriptionObject: Subscription;
   //The Form's Model
   loginData = this.formBuilder.group<LoginForm>({
     email: new FormControl<string>('', [Validators.required, Validators.email]),
@@ -83,12 +81,9 @@ export class LoginPage implements OnDestroy {
   ) {
     // enable and disabled the submit button
     this.disabled = signal<boolean>(this.loginData.invalid);
-    this.valueChangesSubcriptionObject = this.loginData.valueChanges.subscribe(() => {
+    this.loginData.valueChanges.subscribe(() => {
       this.disabled.set(this.loginData.invalid);
     });
-  }
-  ngOnDestroy(): void {
-    this.valueChangesSubcriptionObject.unsubscribe();
   }
   onSubmit(): void {
     const data = this.loginData.value;
@@ -104,7 +99,6 @@ export class LoginPage implements OnDestroy {
         },
       }
     );
-    loginSubscribtion.unsubscribe();
   }
 }
 

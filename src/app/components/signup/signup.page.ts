@@ -47,7 +47,7 @@ import { AuthenticationService } from 'src/app/services/outer services/springBoo
     RouterModule,
   ],
 })
-export class SignupPage implements OnDestroy {
+export class SignupPage {
 
   showErrorMessage: WritableSignal<string | null> = signal(null);
 
@@ -60,20 +60,14 @@ export class SignupPage implements OnDestroy {
   });
   //diabling and enabling the submit button
   disableSubmitButton: WritableSignal<boolean> = signal<boolean>(true);
-  //This prop is responsible for unsubscription the valueChanges Observable
-  sub: Subscription;
   constructor(
     private fb: FormBuilder,
     private authenticationService: AuthenticationService,
     private router: Router,
   ) {
-    this.sub = this.signupData.valueChanges.subscribe(()=> {
+    this.signupData.valueChanges.subscribe(()=> {
       this.disableSubmitButton.set(this.signupData.invalid);
     });
-  }
-
-  ngOnDestroy() : void {
-    this.sub.unsubscribe();
   }
   onSubmit(): void {
     const data = this.signupData.value;
@@ -89,6 +83,5 @@ export class SignupPage implements OnDestroy {
         },
       }
     );
-    signupSubscribtion.unsubscribe();
   }
 }
