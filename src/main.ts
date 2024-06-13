@@ -8,10 +8,11 @@ import { AppComponent } from './app/App component/app.component';
 import { environment } from './environments/environment';
 
 import { register } from 'swiper/element/bundle';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule, provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideState, provideStore } from '@ngrx/store';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { userInfoFeature } from './app/store/userAuthentication/user-auth.reducer';
+import { tokenInterceptor } from './app/interceptors/token.interceptor';
 
 register();
 
@@ -24,9 +25,9 @@ bootstrapApplication(AppComponent, {
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     provideIonicAngular(),
     provideRouter(routes),
-    importProvidersFrom(HttpClientModule),
     provideStore(),
+    provideHttpClient(withInterceptors([tokenInterceptor])),
     provideState(userInfoFeature),
-    provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() })
-],
+    provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
+  ]
 });
