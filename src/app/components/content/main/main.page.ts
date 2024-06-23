@@ -23,7 +23,6 @@ import { SongService } from 'src/app/services/outer-service/springBootBasedServi
     IonRippleEffect,
     RouterModule
   ],
-  providers: [SongService],
 })
 export class MainPage {
 

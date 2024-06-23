@@ -13,13 +13,13 @@
           </div>
         </ion-text>
       </ion-label>
-      <ion-button (click)="whenSmallMediaPlayerButtonIsClicked()" fill="clear">
+      <ion-button  fill="clear"> //(click)="whenSmallMediaPlayerButtonIsClicked()"
         <ion-icon
-          [name]="this.isPaused ? 'play-circle' : 'pause-circle'"
+          name="pause-circle"
           color="light"
           size="large"
           slot="icon-only"
-        ></ion-icon>
+        ></ion-icon> //this.isPaused ? 'play-circle' : 'pause-circle'
       </ion-button>
       <ion-button fill="clear" (click)="this.mediaPlayerAppearanceState.hideMediaPlayer()">
         <ion-icon

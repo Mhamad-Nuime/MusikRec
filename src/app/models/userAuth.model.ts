@@ -1,8 +1,8 @@
 export interface UserAuthentication {
-  id: number;
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-  token: string;
+  id: number | null;
+  firstName: string | null;
+  lastName: string | null;
+  email: string | null;
+  password: string | null;
+  token: string | null;
 }

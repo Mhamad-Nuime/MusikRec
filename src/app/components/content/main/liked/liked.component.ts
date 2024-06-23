@@ -42,7 +42,6 @@ export class LikedComponent {
     addIcons({
       ellipsisVertical
     });
-    this.store.dispatch(getLikedSongs());
     this.liked$ = this.store.select(songsFeature.selectLikedSongs);
   }
 }

@@ -43,7 +43,6 @@ export class HistroyComponent{
     addIcons({
       ellipsisVertical
     });
-    this.store.dispatch(getHistorySongs());
     this.historySongs$ = this.store.select(songsFeature.selectHistorySongs);;
   }
 }

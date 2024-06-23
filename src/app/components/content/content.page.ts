@@ -30,13 +30,15 @@ import {
 import { MediaPlayerAppearanceStateService } from '../../services/inner-services/media-player-appearance-state';
 import { OpenActionSheetService } from '../../services/inner-services/open-action-sheet.service';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { getHistorySongs, getLikedSongs, getRecommandedSongs, getTrendySongs } from 'src/app/store/songs/songs.action';
 
 @Component({
   selector: 'app-content',
   templateUrl: './content.page.html',
   styleUrls: ['./content.page.scss'],
   standalone: true,
-  providers: [MediaPlayerAppearanceStateService, OpenActionSheetService],
+  providers: [MediaPlayerAppearanceStateService, OpenActionSheetService ],
   imports: [IonActionSheet, 
     IonRippleEffect,
     IonProgressBar,
@@ -58,12 +60,11 @@ import { Router } from '@angular/router';
 export class ContentPage {
   @ViewChild('tabs') tabs!: IonTabs;
   selected: string = '';
-  isPaused: boolean = false;
-  currentTrackDuration: number = 42;
 
   openActionSheet: boolean = false ;
 
   constructor(
+    private store : Store,
     public mediaPlayerAppearanceState: MediaPlayerAppearanceStateService,
     public openActionSheetService : OpenActionSheetService,
     public router : Router,
@@ -81,7 +82,11 @@ export class ContentPage {
     });
     this.openActionSheetService.isActionSheetOpen().subscribe( isOpen => {
       this.openActionSheet = isOpen;
-    })
+    });
+    this.store.dispatch(getLikedSongs());
+    this.store.dispatch(getHistorySongs());
+    this.store.dispatch(getTrendySongs());
+    this.store.dispatch(getRecommandedSongs());
   }
 
   public actionSheetButtons = [
@@ -110,20 +115,5 @@ export class ContentPage {
 
   setSelectedTabName() {
     this.selected = this.tabs.getSelected() as string;
-  }
-  pauseOrPlay(): void {
-    this.isPaused = !this.isPaused;
-  }
-  whenSmallMediaPlayerButtonIsClicked(): void {
-    this.pauseOrPlay();
-  }
-  seekTo(event: any) {
-    const progressBar = event.target;
-    const clickPosition =
-      event.clientX - progressBar.getBoundingClientRect().left;
-    const totalWidth = progressBar.offsetWidth;
-    const percentClicked = (clickPosition / totalWidth) * 100;
-
-    const desiredTime = (percentClicked / 100) * this.currentTrackDuration;
   }
 }

@@ -104,6 +104,6 @@ export const songsReducer = createReducer(
   )
 );
 export const songsFeature = createFeature({
-  name: 'trendy-histroy-liked-recommanded feature',
+  name: 'trendyHistroyLikedRecommandedFeature',
   reducer: songsReducer,
 })

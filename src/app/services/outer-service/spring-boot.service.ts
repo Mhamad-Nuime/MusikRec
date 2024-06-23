@@ -3,7 +3,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { HttpParams } from '@capacitor/core';
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class SpringBootService {
 
   constructor(

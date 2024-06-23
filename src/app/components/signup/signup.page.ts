@@ -20,7 +20,7 @@ import {
 import { Router, RouterModule } from '@angular/router';
 import { Subscription, timer } from 'rxjs';
 import { SignUpForm } from 'src/app/models/userBasedModels/signup/signupForm';
-import { AuthenticationService } from 'src/app/services/outer services/springBootBasedServices/Authentication.service';
+import { AuthenticationService } from '../../services/outer-service/springBootBasedServices/Authentication.service';;
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.page.html',

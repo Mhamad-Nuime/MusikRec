@@ -4,7 +4,6 @@ import {  ellipsisVertical } from 'ionicons/icons';
 import { OpenActionSheetService } from '../../../../services/inner-services/open-action-sheet.service';
 import { Songs } from 'src/app/models/song.model';
 import { Store } from '@ngrx/store';
-import { getRecommandedSongs, getTrendySongs } from 'src/app/store/songs/songs.action';
 import { songsFeature } from 'src/app/store/songs/songs.reducer';
 import { Observable } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
@@ -28,8 +27,6 @@ export class TrendingComponent {
     addIcons({
       ellipsisVertical
     });
-  this.store.dispatch(getTrendySongs());
-  this.store.dispatch(getRecommandedSongs());
   this.trendy$ = this.store.select(songsFeature.selectTrendySongs);
   this.recommanded$ = this.store.select(songsFeature.selectRecommandedSongs);
   }
