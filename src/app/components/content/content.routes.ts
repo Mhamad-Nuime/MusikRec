@@ -1,15 +1,31 @@
 import { Routes } from '@angular/router';
+import { provideEffects } from '@ngrx/effects';
+import { provideState } from '@ngrx/store';
+import {
+  HistorySongsEffect,
+  LikedSongsEffect,
+  RecommandedSongsEffect,
+  TrendySongsEffect,
+} from 'src/app/store/songs/songs.effect';
+import { songsFeature } from 'src/app/store/songs/songs.reducer';
 
 export const routes: Routes = [
   {
     path: '',
-    loadComponent: () =>
-      import('./content.page').then((m) => m.ContentPage),
+    loadComponent: () => import('./content.page').then((m) => m.ContentPage),
     children: [
       {
         path: 'main',
-        loadChildren: () =>
-          import('./main/main.routes').then((r) => r.routes),
+        providers: [
+          provideState(songsFeature),
+          provideEffects([
+            TrendySongsEffect,
+            HistorySongsEffect,
+            LikedSongsEffect,
+            RecommandedSongsEffect,
+          ]),
+        ],
+        loadChildren: () => import('./main/main.routes').then((r) => r.routes),
       },
       {
         path: 'search',
@@ -23,7 +39,8 @@ export const routes: Routes = [
       },
       {
         path: 'details/:id',
-        loadComponent: () => import('./details/details.page').then( m => m.DetailsPage)
+        loadComponent: () =>
+          import('./details/details.page').then((m) => m.DetailsPage),
       },
       {
         path: '',

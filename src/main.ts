@@ -13,6 +13,8 @@ import { provideState, provideStore } from '@ngrx/store';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { userInfoFeature } from './app/store/userAuthentication/user-auth.reducer';
 import { tokenInterceptor } from './app/interceptors/token.interceptor';
+import { provideEffects } from '@ngrx/effects';
+import { songsFeature } from './app/store/songs/songs.reducer';
 
 register();
 
@@ -29,5 +31,6 @@ bootstrapApplication(AppComponent, {
     provideHttpClient(withInterceptors([tokenInterceptor])),
     provideState(userInfoFeature),
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
-  ]
+    provideEffects()
+]
 });

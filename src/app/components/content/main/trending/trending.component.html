@@ -21,18 +21,19 @@
         autoplay-delay="2500"
         autoplay-disable-on-interaction="false"
       >
-        @for(song of songs; track song.id){
-        <swiper-slide (click)="playSong()">
+        @for(song of (recommanded$ | async)?.songs ; track song.id){
+        <swiper-slide [song]="song"> //(click)="playSong()"
           <div class="slide-flex">
             <div class="img-wrap">
               <img
-                [src]="'/assets/images/albums/'+dasherize(song.image)+'.jpg'"
+                [src]="song.image"
                 alt=""
                 width="150"
                 height="150"
               />
             </div>
-            <p style="overflow-x: hidden">{{song.title}}</p>
+            <p style="overflow-x: hidden">{{song.name}}</p>
+            <p style="overflow-x: hidden">{{song.artist}}</p>
           </div>
         </swiper-slide>
         }
@@ -46,19 +47,22 @@
       <h3>Trends</h3>
     </ion-text>
   </ion-list-header>
-  @for(song of songs;track song.id) {
+  @for(song of (trendy$ | async)?.songs ;track song.id) {
   <ion-item [id]="$index">
     <ion-thumbnail
       [style.--border-radius]="'8px'"
       slot="start"
-      (click)="playSong()"
-    >
+      >
+      //(click)="playSong()"
       <ion-img
-        [src]="'/assets/images/albums/'+dasherize(song.image)+'.jpg'"
+        [src]="song.image"
         alt=""
       />
     </ion-thumbnail>
-    <ion-label (click)="playSong()"> {{song.title}} </ion-label>
+    <ion-label >
+      <p>{{song.name}}</p>
+      <p>{{song.artist}}</p>
+    </ion-label> //(click)="playSong()"
     <ion-button slot="end" fill="clear" (click)="this.openActionSheetService.openActionSheet(song)">
       <ion-icon
         slot="icon-only"

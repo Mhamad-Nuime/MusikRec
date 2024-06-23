@@ -1,8 +1,9 @@
 import { createFeature, createReducer, on } from "@ngrx/store";
-import { UserAuthentication } from "src/app/models/userAuth.interface";
+import { UserAuthentication } from "src/app/models/userAuth.model";
 import { saveUserInfo } from "./user-auth.action";
 
 export const initialUserInfo : UserAuthentication = {
+  id: null,
   firstName: null,
   lastName: null,
   email: null,

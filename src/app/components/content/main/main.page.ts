@@ -7,6 +7,7 @@ import {
   IonToolbar,
   IonRippleEffect,
 } from '@ionic/angular/standalone';
+import { SongService } from 'src/app/services/outer-service/springBootBasedServices/song.service';
 
 
 @Component({
@@ -22,6 +23,7 @@ import {
     IonRippleEffect,
     RouterModule
   ],
+  providers: [SongService],
 })
 export class MainPage {
 

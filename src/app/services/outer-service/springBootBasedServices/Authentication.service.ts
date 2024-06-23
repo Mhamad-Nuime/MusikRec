@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { SpringBootService } from '../spring-boot.service';
-import { UserAuthentication } from '../../../models/userAuth.interface';
+import { UserAuthentication } from '../../../models/userAuth.model';
 import { LoginInfo } from 'src/app/models/userBasedModels/login/loginInfo';
 import { Store } from '@ngrx/store';
 import { saveUserInfo } from 'src/app/store/userAuthentication/user-auth.action';

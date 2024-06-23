@@ -27,8 +27,8 @@ import {
   IonText,
   IonProgressBar,
   IonRippleEffect, IonActionSheet } from '@ionic/angular/standalone';
-import { MediaPlayerAppearanceStateService } from '../../services/inner services/media-player-appearance-state';
-import { OpenActionSheetService } from '../../services/inner services/open-action-sheet.service';
+import { MediaPlayerAppearanceStateService } from '../../services/inner-services/media-player-appearance-state';
+import { OpenActionSheetService } from '../../services/inner-services/open-action-sheet.service';
 import { Router } from '@angular/router';
 
 @Component({
