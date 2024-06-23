@@ -17,19 +17,19 @@ export class SongService {
   }
 
   getTrendy() : Observable<Songs> {
-    const trendySongs$ = this.springBootService.getRequest<Songs>('trendy' , {"id" : (this.userId?.toString() || '')});
+    const trendySongs$ = this.springBootService.getRequest<Songs>('trendy' , {"userId" : (this.userId?.toString() || '')});
     return trendySongs$;
   }
   getHistory() : Observable<Songs> {
-    const historySongs$ = this.springBootService.getRequest<Songs>('histroy' , {"id" : (this.userId?.toString() || '')});
+    const historySongs$ = this.springBootService.getRequest<Songs>('histroy' , {"userId" : (this.userId?.toString() || '')});
     return historySongs$;
   }
   getLiked() : Observable<Songs> {
-    const likedSongs$ = this.springBootService.getRequest<Songs>('liked' , {"id" : (this.userId?.toString() || '')});
+    const likedSongs$ = this.springBootService.getRequest<Songs>('liked' , {"userId" : (this.userId?.toString() || '')});
     return likedSongs$;
   }
   getRecommanded() : Observable<Songs> {
-    const recommandedSongs$ = this.springBootService.getRequest<Songs>('recommanded' , {"id" : (this.userId?.toString() || '')});
+    const recommandedSongs$ = this.springBootService.getRequest<Songs>('recommanded' , {"userId" : (this.userId?.toString() || '')});
     return recommandedSongs$;
   }
 }
