@@ -24,7 +24,7 @@ import {
   IonInfiniteScrollContent,
   IonThumbnail,
 } from '@ionic/angular/standalone';
-import { MediaPlayerAppearanceStateService } from '../../../services/inner services/media-player-appearance-state';
+import { MediaPlayerAppearanceStateService } from '../../../services/inner-services/media-player-appearance-state';
 import { arrowForwardCircle } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
 

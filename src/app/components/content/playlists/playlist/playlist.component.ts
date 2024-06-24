@@ -12,7 +12,7 @@ import {
   IonThumbnail, IonTitle, IonActionSheet } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { arrowForward, ellipsisVertical } from 'ionicons/icons';
-import { MediaPlayerAppearanceStateService } from '../../../../services/inner services/media-player-appearance-state';
+import { MediaPlayerAppearanceStateService } from '../../../../services/inner-services/media-player-appearance-state';
 
 @Component({
   selector: 'app-playlist',

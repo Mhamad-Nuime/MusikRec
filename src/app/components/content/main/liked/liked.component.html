@@ -1,3 +1,29 @@
-<p>
-  liked works!
-</p>
+<ion-list>
+  @for(song of (liked$ | async)?.songs ;track song.id) {
+  <ion-item [id]="$index">
+    <ion-thumbnail
+      [style.--border-radius]="'8px'"
+      slot="start"
+      >
+      //(click)="playSong()"
+      <ion-img
+        [src]="song.image"
+        alt=""
+      />
+    </ion-thumbnail>
+    <ion-label >
+      <p>{{song.name}}</p>
+      <p>{{song.artist}}</p>
+    </ion-label> //(click)="playSong()"
+    <ion-button slot="end" fill="clear" (click)="this.openActionSheetService.openActionSheet(song)">
+      <ion-icon
+        slot="icon-only"
+        size="large"
+        color="secondary"
+        name="ellipsis-vertical"
+        size="small"
+      ></ion-icon>
+    </ion-button>
+  </ion-item>
+  }
+</ion-list>

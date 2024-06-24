@@ -18,6 +18,11 @@ import {
 import { addIcons } from 'ionicons';
 import { ellipsisVertical } from 'ionicons/icons';
 import { PlaylistComponent } from './playlist/playlist.component';
+import { Playlist } from 'src/app/models/playlist.model';
+import { playlistFeature } from 'src/app/store/playlists/playlists.reducer';
+import { Store } from '@ngrx/store';
+import { AsyncPipe } from '@angular/common';
+
 @Component({
   selector: 'app-playlists',
   templateUrl: './playlists.page.html',
@@ -40,105 +45,17 @@ import { PlaylistComponent } from './playlist/playlist.component';
     FormsModule,
     IonThumbnail,
     PlaylistComponent,
+    AsyncPipe
   ],
 })
 export class PlaylistsPage {
-  constructor(){
+  playlists! : Playlist[] | null;
+  constructor(private store : Store){
     addIcons({
       ellipsisVertical,
     });
+    this.store.select(playlistFeature.selectPlaylists).subscribe(playlists => this.playlists = playlists);
   }
-
-  playlists = [
-    {
-      playlist_id: 1,
-      playlist_name: 'ionic',
-      content: {
-        songs: [
-          {
-            song_id: 10,
-            song_name: 'lose your self',
-            song_url: 'assets/images/albums/sea-of-cowards.jpg',
-          },
-          {
-            song_id: 13,
-            song_name: 'lose your self 14',
-            song_url: 'assets/images/albums/sea-of-cowards.jpg',
-          },
-          {
-            song_id: 50,
-            song_name: 'lose your self and what is up?',
-            song_url: 'assets/images/albums/sea-of-cowards.jpg',
-          },
-        ],
-      },
-    },
-    {
-      playlist_id: 2,
-      playlist_name: 'ionic',
-      content: {
-        songs: [
-          {
-            song_id: 10,
-            song_name: 'lose your self',
-            song_url: 'assets/images/albums/houses-of-the-holy.jpg',
-          },
-        ],
-      },
-    },
-    {
-      playlist_id: 3,
-      playlist_name: 'ionic',
-      content: {
-        songs: [
-          {
-            song_id: 10,
-            song_name: 'lose your self',
-            song_url: 'assets/images/albums/ex-re.jpg',
-          },
-        ],
-      },
-    },
-    {
-      playlist_id: 4,
-      playlist_name: 'ionic',
-      content: {
-        songs: [
-          {
-            song_id: 10,
-            song_name: 'lose your self',
-            song_url: 'assets/images/albums/the-legend-of-mr-rager.jpg',
-          },
-        ],
-      },
-    },
-    {
-      playlist_id: 5,
-      playlist_name: 'ionic',
-      content: {
-        songs: [
-          {
-            song_id: 10,
-            song_name: 'lose your self',
-            song_url: 'assets/images/albums/the-creek-drank.jpg',
-          },
-        ],
-      },
-    },
-    {
-      playlist_id: 6,
-      playlist_name: 'ionic',
-      content: {
-        songs: [
-          {
-            song_id: 10,
-            song_name: 'lose your self',
-            song_url: 'assets/images/albums/when-we-all-fall-asleep.jpg',
-          },
-        ],
-      },
-    },
-  ];
 
   currentPlaylist : any = null;
   displayCurrentPlaylist : boolean = false;
@@ -161,8 +78,8 @@ export class PlaylistsPage {
 
   displayPlaylistContent(playlist : HTMLDivElement): void {
     const desiredPlaylistId : number = Number(playlist.getAttribute('id'));
-    this.currentPlaylist = this.playlists.find(
-        (playlist) => playlist.playlist_id === desiredPlaylistId
+    this.currentPlaylist = this.playlists?.find(
+        (playlist) => playlist.id === desiredPlaylistId
       );
       this.displayCurrentPlaylist = true;
   }

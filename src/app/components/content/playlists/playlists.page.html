@@ -8,23 +8,24 @@
   @if(!(displayCurrentPlaylist && currentPlaylist)){
     <div id="playlists-container" class="playlists-wrap">
       <ion-list>
-        @for(playlist of playlists ; track playlist.playlist_id){
+        @for(playlist of playlists ; track playlist.id){
         <div
           #p
           class="playlist-wrap"
-          [id]="playlist.playlist_id"
+          [id]="playlist.id"
         >
           <ion-item>
             <div class='clickable-part-of-item'(click)="displayPlaylistContent(p)">
               <div class="image-wrap">
                 <img
-                  [src]="playlist.content.songs[0].song_url"
+                  [src]="playlist.songs[0].url"
                   width="80"
                   height="80"
                 />
               </div>
               <ion-label>
-                {{playlist.playlist_name}}
+                <p>{{playlist.name}}</p>
+                <p style="overflow-x : hidden;">{{playlist.description}}</p>
               </ion-label>
             </div>
             <ion-button (click)="options(true)" slot="end" fill="clear">

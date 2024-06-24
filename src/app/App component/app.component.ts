@@ -1,6 +1,6 @@
 import { Component, EnvironmentInjector, inject } from '@angular/core';
 import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
-import { SpringBootService } from '../services/outer services/spring-boot.service';
+import { SpringBootService } from '../services/outer-service/spring-boot.service';
 
 @Component({
   selector: 'app-root',
