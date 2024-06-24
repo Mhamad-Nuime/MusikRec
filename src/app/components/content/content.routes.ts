@@ -1,6 +1,8 @@
 import { Routes } from '@angular/router';
 import { provideEffects } from '@ngrx/effects';
 import { provideState } from '@ngrx/store';
+import { PlaylistEffects } from 'src/app/store/playlists/playlists.effects';
+import { playlistFeature } from 'src/app/store/playlists/playlists.reducer';
 import {
   SongsEffect,
 } from 'src/app/store/songs/songs.effect';
@@ -15,7 +17,8 @@ export const routes: Routes = [
         path: 'main',
         providers: [
           provideState(songsFeature),
-          provideEffects([SongsEffect]),
+          provideState(playlistFeature),
+          provideEffects([SongsEffect, PlaylistEffects]),
         ],
         loadChildren: () => import('./main/main.routes').then((r) => r.routes),
       },
