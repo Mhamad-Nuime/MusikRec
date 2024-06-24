@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import {
   IonContent,
@@ -27,7 +27,11 @@ import {
 import { MediaPlayerAppearanceStateService } from '../../../services/inner-services/media-player-appearance-state';
 import { arrowForwardCircle } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
-
+import { SearchService } from 'src/app/services/outer-service/springBootBasedServices/search.sevice';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Observable, debounceTime, distinctUntilChanged, filter, map, retry, startWith, switchMap } from 'rxjs';
+import { Songs } from 'src/app/models/song.model';
+import { OpenActionSheetService } from 'src/app/services/inner-services/open-action-sheet.service';
 @Component({
   selector: 'app-search',
   templateUrl: './search.page.html',
@@ -55,41 +59,36 @@ import { addIcons } from 'ionicons';
     IonTitle,
     IonToolbar,
     CommonModule,
-    FormsModule,
+    ReactiveFormsModule,
     IonThumbnail,
   ],
+  providers: [SearchService],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class SearchPage implements OnInit {
-  results = [
-    { id: 1, title: 'test search song' },
-    { id: 2, title: 'test search song' },
-    { id: 3, title: 'test search song' },
-    { id: 4, title: 'test search song' },
-    { id: 5, title: 'test search song' },
-    { id: 6, title: 'test search song' },
-    { id: 7, title: 'test search song' },
-    { id: 8, title: 'test search song' },
-    { id: 9, title: 'test search song' },
-    { id: 10, title: 'test search song' },
-    { id: 11, title: 'test search song' },
-    { id: 12, title: 'test search song' },
-    { id: 13, title: 'test search song' },
-    { id: 14, title: 'test search song' },
-    { id: 15, title: 'test search song' },
-  ];
+  searchField = new FormControl('');
+  results$!: Observable<Songs>;
   constructor(
-    public mediaPlayerAppearanceState: MediaPlayerAppearanceStateService
+    private searchService: SearchService,
+    public mediaPlayerAppearanceState: MediaPlayerAppearanceStateService,
+    public openActionSheetService : OpenActionSheetService,
   ) {
     addIcons({
       arrowForwardCircle,
     });
+    this.results$ = this.searchField.valueChanges.pipe(
+      map(searchTerm => (searchTerm as string).trim()),
+      debounceTime(200),
+      distinctUntilChanged(),
+      filter(searchTerm => !(["", null].includes(searchTerm))),
+      switchMap(searchTerm => this.searchService.search(searchTerm)),
+      retry(3),
+      startWith([])
+    )
   }
 
   ngOnInit() {}
 
-  handleSearchQuery(event: Event): void {
-    //calling the service that responsible for resolving the user search query
-  }
   playSong(): void {
     this.mediaPlayerAppearanceState.displayMediaPlayer();
   }
