@@ -1,5 +1,5 @@
 import { Injectable, inject } from "@angular/core";
-import { Actions, ofType } from "@ngrx/effects";
+import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { PlaylistService } from "src/app/services/outer-service/springBootBasedServices/playlist.service";
 import { getPlaylists, getPlaylistsFail, getPlaylistsSuccess } from "./playlists.actions";
 import { catchError, map, mergeMap, of } from "rxjs";
@@ -10,9 +10,10 @@ import { HttpErrorResponse } from "@angular/common/http";
 export class PlaylistEffects {
   private action$ = inject(Actions);
   private playlistService = inject(PlaylistService);
-  getPlaylist$ = this.action$.pipe(
+  loadPlaylist$ = createEffect(() => this.action$.pipe(
     ofType(getPlaylists),
     mergeMap(() => {
+      console.log('hi effect work !');
       return this.playlistService.getPlaylists().pipe(
         map((playlists : Playlist[]) => getPlaylistsSuccess({playlists})),
         catchError((err: HttpErrorResponse) => {
@@ -21,5 +22,5 @@ export class PlaylistEffects {
         })
       );
     }),
-  );
+  ));
 }

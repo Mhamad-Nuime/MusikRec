@@ -15,9 +15,10 @@ export const playlistReducer = createReducer(
     })
   }),
   on(getPlaylistsFail, (state, action) => {
+    console.log('get playlist fail reducer');
     return ({
       ...state,
-      ...action
+      message : action.message,
     })
   }),
 )

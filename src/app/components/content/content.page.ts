@@ -32,6 +32,7 @@ import { OpenActionSheetService } from '../../services/inner-services/open-actio
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { getHistorySongs, getLikedSongs, getRecommandedSongs, getTrendySongs } from 'src/app/store/songs/songs.action';
+import { getPlaylists } from 'src/app/store/playlists/playlists.actions';
 
 @Component({
   selector: 'app-content',
@@ -87,6 +88,7 @@ export class ContentPage {
     this.store.dispatch(getHistorySongs());
     this.store.dispatch(getTrendySongs());
     this.store.dispatch(getRecommandedSongs());
+    this.store.dispatch(getPlaylists());
   }
 
   public actionSheetButtons = [

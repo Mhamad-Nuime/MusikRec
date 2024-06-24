@@ -18,7 +18,6 @@ import {
 import { addIcons } from 'ionicons';
 import { ellipsisVertical } from 'ionicons/icons';
 import { PlaylistComponent } from './playlist/playlist.component';
-import { Observable } from 'rxjs';
 import { Playlist } from 'src/app/models/playlist.model';
 import { playlistFeature } from 'src/app/store/playlists/playlists.reducer';
 import { Store } from '@ngrx/store';

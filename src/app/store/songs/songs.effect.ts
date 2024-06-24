@@ -19,7 +19,7 @@ import {
 import { catchError, map, mergeMap, of } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 @Injectable()
-export class SongsEffect {
+export class SongsEffects {
 
   private actions$ = inject(Actions);
   private songService = inject(SongService);
