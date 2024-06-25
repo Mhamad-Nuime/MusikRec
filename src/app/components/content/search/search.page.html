@@ -6,13 +6,11 @@
 
 <ion-content [fullscreen]="true">
   <ion-searchbar
-  [FormControl]="this.searchField"
+  [formControl]="this.searchField"
   name="query"
   value=""
   inputmode="search"
-  animated="true"
   placeholder="search"
-  [debounce]="2000"
 ></ion-searchbar>
 <ion-list>
   @for(song of results$ | async ;track song.id) {
