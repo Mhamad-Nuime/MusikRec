@@ -28,9 +28,8 @@ import {
   IonButtons,
   IonBackButton,
   IonImg,
-  IonInputPasswordToggle,
-} from '@ionic/angular/standalone';
-import { Subscription, timer } from 'rxjs';
+  IonInputPasswordToggle, IonLoading, IonSpinner } from '@ionic/angular/standalone';
+import { timer } from 'rxjs';
 import { LoginForm } from 'src/app/models/userBasedModels/login/loginForm';
 
 @Component({
@@ -40,7 +39,7 @@ import { LoginForm } from 'src/app/models/userBasedModels/login/loginForm';
   standalone: true,
   providers: [AuthenticationService],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [
+  imports: [IonSpinner, IonLoading, 
     IonImg,
     IonBackButton,
     IonButtons,
@@ -63,9 +62,11 @@ import { LoginForm } from 'src/app/models/userBasedModels/login/loginForm';
     RouterModule,
   ],
 })
-export class LoginPage {
+export class LoginPage implements OnDestroy {
   //this prop is responsable for disabling/enabling the submit button until the validation condations get met
   disabled: WritableSignal<boolean>;
+  //show and hide the spinner
+  showSpinner: boolean = false;
   
   showErrorMessage: WritableSignal<string | null> = signal(null);
   //The Form's Model
@@ -81,24 +82,38 @@ export class LoginPage {
   ) {
     // enable and disabled the submit button
     this.disabled = signal<boolean>(this.loginData.invalid);
-    this.loginData.valueChanges.subscribe(() => {
+    let loginSub =this.loginData.valueChanges.subscribe(() => {
       this.disabled.set(this.loginData.invalid);
     });
+    this.Subscribtions.push(loginSub);
   }
+  Subscribtions : any[] = [];
   onSubmit(): void {
+    this.showSpinner = true;
     const data = this.loginData.value;
-    const loginSubscribtion = this.authenticationService.login(data).subscribe(
+    let submitSubscribtion = this.authenticationService.login(data).subscribe(
       {
         next: () => {
+          this.showSpinner = false;
           this.router.navigateByUrl('/content/main/trends');
         },
-        error: (err: any) => {;
+        error: (err: any) => {
+          this.showSpinner = false;
           this.showErrorMessage.set(`We Get This Error : ${err.message}`);
-          timer(4000).subscribe(() => this.showErrorMessage.set("Try Again"));
-          timer(2000).subscribe(() => this.showErrorMessage.set(null));
+          timer(3000).subscribe(() => {
+            this.showErrorMessage.set("Try Again")
+            timer(2000).subscribe(() => this.showErrorMessage.set(null));
+          });
         },
       }
     );
+    this.Subscribtions.push(submitSubscribtion);
+  }
+  ngOnDestroy() : void {
+    if(this.Subscribtions){
+      this.Subscribtions.forEach( sub => {
+        sub.unsubscribe();
+      });
+    }
   }
 }
-

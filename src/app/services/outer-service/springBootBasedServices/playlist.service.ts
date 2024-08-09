@@ -17,6 +17,6 @@ export class PlaylistService {
     this.userId$.subscribe(id => this.userId = id);
   }
   getPlaylists() : Observable<Playlist[]>{
-    return this.springBootService.getRequest<Playlist[]>('playlists', {'userId' : (this.userId?.toString() || 'null')});
+    return this.springBootService.getRequest<Playlist[]>('playlists');
   }
 }

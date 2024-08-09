@@ -28,8 +28,7 @@ import { MediaPlayerAppearanceStateService } from '../../../services/inner-servi
 import { arrowForwardCircle } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
 import { SearchService } from 'src/app/services/outer-service/springBootBasedServices/search.sevice';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { Observable, debounceTime, distinctUntilChanged, filter, map, retry, startWith, switchMap } from 'rxjs';
+import { Observable, catchError, debounceTime, distinctUntilChanged, filter, map, of, retry, startWith, switchMap } from 'rxjs';
 import { Songs } from 'src/app/models/song.model';
 import { OpenActionSheetService } from 'src/app/services/inner-services/open-action-sheet.service';
 @Component({
@@ -63,7 +62,6 @@ import { OpenActionSheetService } from 'src/app/services/inner-services/open-act
     IonThumbnail,
   ],
   providers: [SearchService],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class SearchPage implements OnInit {
   searchField = new FormControl('');
@@ -76,14 +74,19 @@ export class SearchPage implements OnInit {
     addIcons({
       arrowForwardCircle,
     });
-    this.results$ = this.searchField.valueChanges.pipe(
+    this.results$ = this.searchField.valueChanges
+    .pipe(
       map(searchTerm => (searchTerm as string).trim()),
-      debounceTime(200),
+      debounceTime(1000),
       distinctUntilChanged(),
       filter(searchTerm => !(["", null].includes(searchTerm))),
-      switchMap(searchTerm => this.searchService.search(searchTerm)),
-      retry(3),
-      startWith([])
+      switchMap(searchTerm => this.searchService.search(searchTerm)
+        .pipe(
+          catchError(() => of([]))
+        )
+    ),
+      startWith([]),
+      catchError(() => of([]))
     )
   }
 

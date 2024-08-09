@@ -1,29 +1,56 @@
-<ion-list>
-  @for(song of (historySongs$ | async)?.songs ;track song.id) {
-  <ion-item [id]="$index">
-    <ion-thumbnail
-      [style.--border-radius]="'8px'"
-      slot="start"
-      >
-      //(click)="playSong()"
-      <ion-img
-        [src]="song.image"
-        alt=""
-      />
-    </ion-thumbnail>
-    <ion-label >
-      <p>{{song.name}}</p>
-      <p>{{song.artist}}</p>
-    </ion-label> //(click)="playSong()"
-    <ion-button slot="end" fill="clear" (click)="this.openActionSheetService.openActionSheet(song)">
-      <ion-icon
-        slot="icon-only"
-        size="large"
-        color="secondary"
-        name="ellipsis-vertical"
-        size="small"
-      ></ion-icon>
-    </ion-button>
-  </ion-item>
-  }
-</ion-list>
+@if((historySongs$ | async)?.songs?.length === 0 || this.showSpinnerAfterRefresh){
+  <div class="spinner-wrap">
+    <ion-spinner name="crescent"></ion-spinner>
+  </div>
+} @else if ((historySongs$ | async)?.songs === null) {
+  <div class="message-error-wrapper">
+    <div class="popup">
+      <ion-text class="ion-text-center">
+        <p class="error-message">
+          Error Loading Page
+        </p>
+      </ion-text>
+      <div class="buttons">
+        <button
+        type="button"
+        class="ion-activatable"
+        (click)="onRefresh()"
+        >
+          Refresh
+          <ion-ripple-effect></ion-ripple-effect>
+        </button>
+      </div>
+    </div>
+  </div>
+} @else {
+  <ion-list>
+    @for(song of (historySongs$ | async)?.songs ;track song.id) {
+    <ion-item [id]="$index">
+      <ion-thumbnail
+        [style.--border-radius]="'8px'"
+        slot="start"
+        >
+        //(click)="playSong()"
+        <ion-img
+          [src]="song.image"
+          alt=""
+        />
+      </ion-thumbnail>
+      <ion-label >
+        <p>{{song.name}}</p>
+        <p>{{song.artist}}</p>
+      </ion-label> //(click)="playSong()"
+      <ion-button slot="end" fill="clear" (click)="this.openActionSheetService.openActionSheet(song)">
+        <ion-icon
+          slot="icon-only"
+          size="large"
+          color="secondary"
+          name="ellipsis-vertical"
+          size="small"
+        ></ion-icon>
+      </ion-button>
+    </ion-item>
+    }
+  </ion-list>
+  
+}

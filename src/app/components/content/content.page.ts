@@ -33,13 +33,14 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { getHistorySongs, getLikedSongs, getRecommandedSongs, getTrendySongs } from 'src/app/store/songs/songs.action';
 import { getPlaylists } from 'src/app/store/playlists/playlists.actions';
+import { AudioStreamingService } from 'src/app/services/inner-services/audio-streaming-service.service';
 
 @Component({
   selector: 'app-content',
   templateUrl: './content.page.html',
   styleUrls: ['./content.page.scss'],
   standalone: true,
-  providers: [MediaPlayerAppearanceStateService, OpenActionSheetService ],
+  providers: [MediaPlayerAppearanceStateService, OpenActionSheetService , AudioStreamingService],
   imports: [IonActionSheet, 
     IonRippleEffect,
     IonProgressBar,
@@ -66,6 +67,7 @@ export class ContentPage {
 
   constructor(
     private store : Store,
+    public audioStreamingService : AudioStreamingService,
     public mediaPlayerAppearanceState: MediaPlayerAppearanceStateService,
     public openActionSheetService : OpenActionSheetService,
     public router : Router,
@@ -80,9 +82,6 @@ export class ContentPage {
       playCircle,
       pauseCircle,
       close,
-    });
-    this.openActionSheetService.isActionSheetOpen().subscribe( isOpen => {
-      this.openActionSheet = isOpen;
     });
     this.store.dispatch(getLikedSongs());
     this.store.dispatch(getHistorySongs());

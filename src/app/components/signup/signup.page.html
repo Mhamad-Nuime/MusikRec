@@ -68,6 +68,11 @@
             >Send</ion-button
           >
         </form>
+        @if(showSpinner){
+          <div class="spinner-wrap">
+            <ion-spinner name="dots"></ion-spinner>
+          </div>
+        }
       </ion-col>
     </ion-row>
   </ion-grid>
