@@ -9,12 +9,14 @@ export const initialUserInfo : UserAuthentication = {
   email: null,
   password: null,
   token: null,
+  authenticated: false,
 };
 
 export const userReducer = createReducer(
   initialUserInfo,
   on(saveUserInfo, (state, action) => (
     {
+      ...state,
       ...action.userInfo
     }
   ))

@@ -22,3 +22,10 @@ ion-content {
     --color: white;
   }
 }
+ion-list{
+  background: transparent !important;
+  box-shadow: none;
+}
+ion-item{
+  --background: transparent !important;
+}

@@ -10,20 +10,20 @@ import {
   IonItem,
   IonButton,
   IonLabel,
-  IonThumbnail,
-} from '@ionic/angular/standalone';
+  IonThumbnail, IonText, IonSpinner, IonRippleEffect } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import {  ellipsisVertical } from 'ionicons/icons';
 import { OpenActionSheetService } from 'src/app/services/inner-services/open-action-sheet.service';
-import { Observable } from 'rxjs';
+import { Observable, timer } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
+import { RefreshService } from 'src/app/services/inner-services/refresh.service';
 
 @Component({
   selector: 'app-histroy',
   standalone: true,
   templateUrl: './histroy.component.html',
   styleUrls: ['./histroy.component.scss'],
-  imports: [
+  imports: [IonRippleEffect, IonSpinner, IonText, 
     AsyncPipe,
     IonList,
     IonImg,
@@ -35,14 +35,21 @@ import { AsyncPipe } from '@angular/common';
   ],
 })
 export class HistroyComponent{
-
+  // show or hide loading spinner 
+  showSpinnerAfterRefresh : boolean = false;
   historySongs$! : Observable<{songs: Songs | null, message : string | null}>;
   constructor(private store: Store,
     public openActionSheetService : OpenActionSheetService,
+    public refreshService : RefreshService
   ) {
     addIcons({
       ellipsisVertical
     });
     this.historySongs$ = this.store.select(songsFeature.selectHistorySongs);;
+  }
+  onRefresh() : void {
+    this.showSpinnerAfterRefresh = true;
+    timer(1000).subscribe(() => this.showSpinnerAfterRefresh = false )
+    this.refreshService.refresh();
   }
 }

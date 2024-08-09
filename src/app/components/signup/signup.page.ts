@@ -15,8 +15,7 @@ import {
   IonButton,
   IonFab,
   IonFabButton,
-  IonInputPasswordToggle,
-} from '@ionic/angular/standalone';
+  IonInputPasswordToggle, IonSpinner } from '@ionic/angular/standalone';
 import { Router, RouterModule } from '@angular/router';
 import { Subscription, timer } from 'rxjs';
 import { SignUpForm } from 'src/app/models/userBasedModels/signup/signupForm';
@@ -27,7 +26,7 @@ import { AuthenticationService } from '../../services/outer-service/springBootBa
   styleUrls: ['./signup.page.scss'],
   standalone: true,
   providers: [AuthenticationService],
-  imports: [
+  imports: [IonSpinner, 
     IonFabButton,
     IonFab,
     IonButton,
@@ -47,10 +46,11 @@ import { AuthenticationService } from '../../services/outer-service/springBootBa
     RouterModule,
   ],
 })
-export class SignupPage {
+export class SignupPage implements OnDestroy{
 
   showErrorMessage: WritableSignal<string | null> = signal(null);
-
+  //show and hide the spinner 
+  showSpinner : boolean = false;
   //The form's Model
   signupData = this.fb.group<SignUpForm>({
     firstName: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-z][a-z]{3,10}$')]),
@@ -65,23 +65,39 @@ export class SignupPage {
     private authenticationService: AuthenticationService,
     private router: Router,
   ) {
-    this.signupData.valueChanges.subscribe(()=> {
+    let signupSub = this.signupData.valueChanges.subscribe(()=> {
       this.disableSubmitButton.set(this.signupData.invalid);
     });
+    this.subscribtions.push(signupSub);
   }
+  ngOnDestroy(): void {
+    if(this.subscribtions){
+      this.subscribtions.forEach( sub => {
+        sub.unsubscribe();
+      })
+    }
+  }
+  subscribtions: any[] = [];
   onSubmit(): void {
+    this.showSpinner = true;
     const data = this.signupData.value;
-    const signupSubscribtion = this.authenticationService.signup(data).subscribe(
+    let signupSubscribtion = this.authenticationService.signup(data).subscribe(
       {
         next: () => {
+          this.showSpinner = false;
           this.router.navigateByUrl('/content/main/trends');
         },
-        error: (err: any) => {;
+        error: (err: any) => {
+          this.showSpinner = false;
           this.showErrorMessage.set(`We Get This Error : ${err.message}`);
-          timer(4000).subscribe(() => this.showErrorMessage.set("Try Again"));
-          timer(2000).subscribe(() => this.showErrorMessage.set(null));
+          timer(2000).subscribe(() => {
+            this.showErrorMessage.set('Try Again')
+            timer(2000).subscribe(() => this.showErrorMessage.set(null));
+          });
         },
       }
     );
+    this.subscribtions.push(signupSubscribtion);
   }
+
 }

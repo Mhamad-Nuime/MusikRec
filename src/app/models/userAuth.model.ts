@@ -5,4 +5,5 @@ export interface UserAuthentication {
   email: string | null;
   password: string | null;
   token: string | null;
+  authenticated: boolean;
 }

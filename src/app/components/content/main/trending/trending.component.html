@@ -1,82 +1,117 @@
-<ion-card id="recommandations" class="ion-no-margin">
-  <ion-card-header>
-    <ion-text>
-      <h3>Recommandations</h3>
-    </ion-text>
-  </ion-card-header>
-  <ion-card-content>
-    <div class="swiper-wrap">
-      <swiper-container
-        class="mySwiper"
-        pagination="true"
-        effect="coverflow"
-        grab-cursor="true"
-        centered-slides="true"
-        slides-per-view="auto"
-        coverflow-effect-rotate="50"
-        coverflow-effect-stretch="0"
-        coverflow-effect-depth="100"
-        coverflow-effect-modifier="1"
-        coverflow-effect-slide-shadows="true"
-        autoplay-delay="2500"
-        autoplay-disable-on-interaction="false"
-      >
-        @for(song of (recommanded$ | async)?.songs ; track song.id){
-        <swiper-slide [song]="song"> //(click)="playSong()"
-          <div class="slide-flex">
-            <div class="img-wrap">
-              <img
-                [src]="song.image"
-                alt=""
-                width="150"
-                height="150"
-              />
-            </div>
-            <p style="overflow-x: hidden">{{song.name}}</p>
-            <p style="overflow-x: hidden">{{song.artist}}</p>
-          </div>
-        </swiper-slide>
-        }
-      </swiper-container>
+@if((trendy$ | async)?.songs?.length === 0 || this.showSpinnerAfterRefresh){
+  <div class="spinner-wrap">
+    <ion-spinner name="crescent"></ion-spinner>
+  </div>
+} @else if ((trendy$ | async)?.songs === null) {
+  <div class="message-error-wrapper">
+    <div class="popup">
+      <ion-text class="ion-text-center">
+        <p class="error-message">
+          Error Loading Page
+        </p>
+      </ion-text>
+      <div class="buttons">
+        <button
+        type="button"
+        class="ion-activatable"
+        (click)="onRefresh()"
+        >
+          Refresh
+          <ion-ripple-effect></ion-ripple-effect>
+        </button>
+      </div>
     </div>
-  </ion-card-content>
-</ion-card>
-<ion-list id="time-line">
-  <ion-list-header>
-    <ion-text>
-      <h3>Trends</h3>
-    </ion-text>
-  </ion-list-header>
-  @for(song of (trendy$ | async)?.songs ;track song.id) {
-  <ion-item [id]="$index">
-    <ion-thumbnail
-      [style.--border-radius]="'8px'"
-      slot="start"
-      >
-      //(click)="playSong()"
-      <ion-img
-        [src]="song.image"
-        alt=""
-      />
-    </ion-thumbnail>
-    <ion-label >
-      <p>{{song.name}}</p>
-      <p>{{song.artist}}</p>
-    </ion-label> //(click)="playSong()"
-    <ion-button slot="end" fill="clear" (click)="this.openActionSheetService.openActionSheet(song)">
-      <ion-icon
-        slot="icon-only"
-        size="large"
-        color="secondary"
-        name="ellipsis-vertical"
-        size="small"
-      ></ion-icon>
-    </ion-button>
-  </ion-item>
-  }
-  <ion-infinite-scroll class="ion-margin-vertical">
-    <ion-infinite-scroll-content
-      loading-spinner="circular"
-    ></ion-infinite-scroll-content>
-  </ion-infinite-scroll>
-</ion-list>
+  </div>
+} @else {
+  <div class="content-wrap" >
+    <ion-card id="recommandations" class="ion-no-margin">
+      <ion-card-header>
+        <ion-text>
+          <h3>Recommandations</h3>
+        </ion-text>
+      </ion-card-header>
+      <ion-card-content>
+        <div class="swiper-wrap">
+          <swiper-container
+            class="mySwiper"
+            pagination="true"
+            effect="coverflow"
+            grab-cursor="true"
+            centered-slides="true"
+            slides-per-view="auto"
+            coverflow-effect-rotate="50"
+            coverflow-effect-stretch="0"
+            coverflow-effect-depth="100"
+            coverflow-effect-modifier="1"
+            coverflow-effect-slide-shadows="true"
+            autoplay-delay="2500"
+            autoplay-disable-on-interaction="false"
+          >
+            @for(song of (recommanded$ | async)?.songs ; track song.id){
+            <swiper-slide [song]="song"> //(click)="playSong()"
+              <div class="slide-flex">
+                <div class="img-wrap">
+                  <img
+                    [src]="song.image"
+                    alt=""
+                    width="150"
+                    height="150"
+                  />
+                </div>
+                <p style="overflow-x: hidden">{{song.name}}</p>
+                <p style="overflow-x: hidden">{{song.artist}}</p>
+              </div>
+            </swiper-slide>
+            }
+          </swiper-container>
+        </div>
+      </ion-card-content>
+    </ion-card>
+    <ion-list id="time-line">
+      <ion-list-header>
+        <ion-text>
+          <h3>Trends</h3>
+        </ion-text>
+      </ion-list-header>
+      @for(song of (trendy$ | async)?.songs ;track song.id) {
+      <ion-item [id]="$index">
+        <ion-thumbnail
+          [style.--border-radius]="'8px'"
+          slot="start"
+          >
+          //(click)="playSong()"
+          <ion-img
+            [src]="song.image"
+            alt=""
+          />
+        </ion-thumbnail>
+        <ion-label >
+          <p>{{song.name}}</p>
+          <p>{{song.artist}}</p>
+        </ion-label> //(click)="playSong()"
+        <ion-button slot="end" fill="clear" (click)="this.openActionSheetService.openActionSheet(song)">
+          <ion-icon
+            slot="icon-only"
+            size="large"
+            color="secondary"
+            name="ellipsis-vertical"
+            size="small"
+          ></ion-icon>
+        </ion-button>
+      </ion-item>
+      }
+      <ion-infinite-scroll class="ion-margin-vertical">
+        <ion-infinite-scroll-content
+          loading-spinner="circular"
+        ></ion-infinite-scroll-content>
+      </ion-infinite-scroll>
+    </ion-list>
+    <!-- //trendy$ | async -->
+    @if(true){ 
+      <div class="spinner-wrap">
+        <ion-loading name="crescent" size="large"></ion-loading>
+      </div>
+    }
+  </div>
+}
+

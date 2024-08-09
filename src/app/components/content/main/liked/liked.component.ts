@@ -10,20 +10,20 @@ import {
   IonItem,
   IonButton,
   IonLabel,
-  IonThumbnail,
-} from '@ionic/angular/standalone';
+  IonThumbnail, IonRippleEffect, IonText, IonSpinner } from '@ionic/angular/standalone';
 import { OpenActionSheetService } from 'src/app/services/inner-services/open-action-sheet.service';
 import { addIcons } from 'ionicons';
 import {  ellipsisVertical } from 'ionicons/icons';
-import { Observable } from 'rxjs';
+import { Observable, timer } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
+import { RefreshService } from 'src/app/services/inner-services/refresh.service';
 
 @Component({
   selector: 'app-liked',
   standalone: true,
   templateUrl: './liked.component.html',
   styleUrls: ['./liked.component.scss'],
-  imports: [
+  imports: [IonSpinner, IonText, IonRippleEffect, 
     AsyncPipe,
     IonList,
     IonImg,
@@ -36,12 +36,20 @@ import { AsyncPipe } from '@angular/common';
 })
 export class LikedComponent {
   liked$! : Observable<{songs: Songs | null, message : string | null}>;
+  // show or hide loading spinner
+  showSpinnerAfterRefresh : boolean = false ;
   constructor(private store: Store,
     public openActionSheetService : OpenActionSheetService,
+    public refreshService : RefreshService,
   ) {
     addIcons({
       ellipsisVertical
     });
     this.liked$ = this.store.select(songsFeature.selectLikedSongs);
+  }
+  onRefresh() : void {
+    this.showSpinnerAfterRefresh = true;
+    timer(1000).subscribe(() => this.showSpinnerAfterRefresh = false )
+    this.refreshService.refresh();
   }
 }
