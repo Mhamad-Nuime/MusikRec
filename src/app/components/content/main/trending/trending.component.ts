@@ -9,13 +9,15 @@ import { Observable, timer } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import {IonRippleEffect} from '@ionic/angular/standalone';
 import { RefreshService } from 'src/app/services/inner-services/refresh.service';
+import { AudioStreamingService } from 'src/app/services/inner-services/audio-streaming-service.service';
 @Component({
   selector: 'app-trending',
   standalone: true,
   templateUrl: './trending.component.html',
   styleUrls: ['./trending.component.scss'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [AsyncPipe, IonRippleEffect]
+  imports: [AsyncPipe, IonRippleEffect],
+  providers: [AudioStreamingService],
 })
 export class TrendingComponent {
   trendy$! : Observable<{songs: Songs | null, message : string | null}>;
@@ -26,7 +28,8 @@ export class TrendingComponent {
   constructor(
     private store : Store,
     public openActionSheetService : OpenActionSheetService,
-    public refreshService : RefreshService
+    public refreshService : RefreshService,
+    public audioStreamingService : AudioStreamingService,
   ) {
     addIcons({
       ellipsisVertical
@@ -38,5 +41,9 @@ export class TrendingComponent {
     this.showSpinnerAfterRefresh = true;
     timer(1000).subscribe(() => this.showSpinnerAfterRefresh = false )
     this.refreshService.refresh();
+  }
+  playSong(url : any) {
+    this.audioStreamingService.loadAudio(url);
+    this.audioStreamingService.play();
   }
 }

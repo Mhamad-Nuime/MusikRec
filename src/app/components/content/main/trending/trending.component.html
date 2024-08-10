@@ -78,17 +78,19 @@
         <ion-thumbnail
           [style.--border-radius]="'8px'"
           slot="start"
+          (click)="playSong(song.url)"
           >
-          //(click)="playSong()"
           <ion-img
             [src]="song.image"
             alt=""
           />
         </ion-thumbnail>
-        <ion-label >
+        <ion-label
+        (click)="playSong(song.url)"
+        >
           <p>{{song.name}}</p>
-          <p>{{song.artist}}</p>
-        </ion-label> //(click)="playSong()"
+          <p class="artist">{{song.artist}}</p>
+        </ion-label>
         <ion-button slot="end" fill="clear" (click)="this.openActionSheetService.openActionSheet(song)">
           <ion-icon
             slot="icon-only"
@@ -106,7 +108,6 @@
         ></ion-infinite-scroll-content>
       </ion-infinite-scroll>
     </ion-list>
-    <!-- //trendy$ | async -->
     @if(true){ 
       <div class="spinner-wrap">
         <ion-loading name="crescent" size="large"></ion-loading>
