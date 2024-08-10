@@ -62,8 +62,8 @@ import { AudioStreamingService } from 'src/app/services/inner-services/audio-str
 export class ContentPage {
   @ViewChild('tabs') tabs!: IonTabs;
   selected: string = '';
-
-  openActionSheet: boolean = false ;
+  isPaused : boolean = false;
+  openActionSheet : boolean = false ;
 
   constructor(
     private store : Store,
@@ -116,5 +116,17 @@ export class ContentPage {
 
   setSelectedTabName() {
     this.selected = this.tabs.getSelected() as string;
+  }
+  playOrPause() : void {
+    if(this.isPaused){
+      this.audioStreamingService.continue();
+    } else {
+      this.audioStreamingService.pause();
+    }
+    this.isPaused = !(this.isPaused);
+  }
+  closeMediaPlayer(){
+    this.audioStreamingService.pause();
+    this.mediaPlayerAppearanceState.hideMediaPlayer();
   }
 }

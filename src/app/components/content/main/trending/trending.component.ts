@@ -10,6 +10,7 @@ import { AsyncPipe } from '@angular/common';
 import {IonRippleEffect} from '@ionic/angular/standalone';
 import { RefreshService } from 'src/app/services/inner-services/refresh.service';
 import { AudioStreamingService } from 'src/app/services/inner-services/audio-streaming-service.service';
+import { MediaPlayerAppearanceStateService } from 'src/app/services/inner-services/media-player-appearance-state';
 @Component({
   selector: 'app-trending',
   standalone: true,
@@ -17,7 +18,6 @@ import { AudioStreamingService } from 'src/app/services/inner-services/audio-str
   styleUrls: ['./trending.component.scss'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [AsyncPipe, IonRippleEffect],
-  providers: [AudioStreamingService],
 })
 export class TrendingComponent {
   trendy$! : Observable<{songs: Songs | null, message : string | null}>;
@@ -30,6 +30,7 @@ export class TrendingComponent {
     public openActionSheetService : OpenActionSheetService,
     public refreshService : RefreshService,
     public audioStreamingService : AudioStreamingService,
+    public mediaPlayer:  MediaPlayerAppearanceStateService,
   ) {
     addIcons({
       ellipsisVertical
@@ -43,7 +44,7 @@ export class TrendingComponent {
     this.refreshService.refresh();
   }
   playSong(url : any) {
-    this.audioStreamingService.loadAudio(url);
-    this.audioStreamingService.play();
+    this.mediaPlayer.displayMediaPlayer();
+    this.audioStreamingService.play(url);
   }
 }
