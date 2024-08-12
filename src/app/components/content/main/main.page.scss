@@ -3,6 +3,12 @@ ion-header{
   ion-toolbar{
     --background: transparent ;
     backdrop-filter: blur(20px);
+    position: relative;
+    ion-button{
+      position: absolute;
+      bottom: 5px;
+      right: 6px;
+    }
   }
 }
 ion-content{

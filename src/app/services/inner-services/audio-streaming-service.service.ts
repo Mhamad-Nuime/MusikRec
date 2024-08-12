@@ -4,8 +4,8 @@ import { Injectable } from '@angular/core';
 export class AudioStreamingService {
   audio : any =  new Audio();
   constructor(){}
-  play(url : any ) {
-    this.audio.src = url;
+  play(song : any ) {
+    this.audio.src = song.previewUrl;
     this.audio.play();
   }
   continue() {

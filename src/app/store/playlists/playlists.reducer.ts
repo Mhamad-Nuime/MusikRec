@@ -15,7 +15,6 @@ export const playlistReducer = createReducer(
     })
   }),
   on(getPlaylistsFail, (state, action) => {
-    console.log('get playlist fail reducer');
     return ({
       playlists : null,
       message : action.message,
@@ -25,4 +24,4 @@ export const playlistReducer = createReducer(
 export const playlistFeature = createFeature({
   name: 'playlists',
   reducer: playlistReducer
-})
+});

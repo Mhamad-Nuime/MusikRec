@@ -31,6 +31,7 @@ import { SearchService } from 'src/app/services/outer-service/springBootBasedSer
 import { Observable, catchError, debounceTime, distinctUntilChanged, filter, map, of, retry, startWith, switchMap } from 'rxjs';
 import { Songs } from 'src/app/models/song.model';
 import { OpenActionSheetService } from 'src/app/services/inner-services/open-action-sheet.service';
+import { AudioStreamingService } from 'src/app/services/inner-services/audio-streaming-service.service';
 @Component({
   selector: 'app-search',
   templateUrl: './search.page.html',
@@ -63,13 +64,15 @@ import { OpenActionSheetService } from 'src/app/services/inner-services/open-act
   ],
   providers: [SearchService],
 })
-export class SearchPage implements OnInit {
+export class SearchPage {
   searchField = new FormControl('');
   results$!: Observable<Songs>;
   constructor(
     private searchService: SearchService,
     public mediaPlayerAppearanceState: MediaPlayerAppearanceStateService,
     public openActionSheetService : OpenActionSheetService,
+    public audioStreamingService : AudioStreamingService,
+    public mediaPlayer:  MediaPlayerAppearanceStateService,
   ) {
     addIcons({
       arrowForwardCircle,
@@ -90,9 +93,8 @@ export class SearchPage implements OnInit {
     )
   }
 
-  ngOnInit() {}
-
-  playSong(): void {
-    this.mediaPlayerAppearanceState.displayMediaPlayer();
+  playSong(song : any) {
+    this.mediaPlayer.displayMediaPlayer();
+    this.audioStreamingService.play(song);
   }
 }

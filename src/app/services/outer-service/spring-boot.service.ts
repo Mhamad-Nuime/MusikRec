@@ -18,7 +18,10 @@ export class SpringBootService {
   getRequest<T>(pathName : string, queryParams? : HttpParams ) : Observable<T> {
     return this.http.get<T>(`${environment.springBootBaseUrl + ( pathName || '' ) }`, {headers: this.headers, params: queryParams});
   }
-  postRequest<D,T>(pathName: string, data : D, queryParams? : HttpParams) : Observable<T> {
+  postRequest<D,T>(pathName: string, data? : D, queryParams? : HttpParams) : Observable<T> {
     return this.http.post<T>(`${environment.springBootBaseUrl + ( pathName || '' )}`, data, {headers: this.headers, params: queryParams});
   }
+  deleteRequest(pathName : string, queryParams? : HttpParams ) : Observable<any> {
+    return this.http.delete(`${environment.springBootBaseUrl + ( pathName || '' ) }`, {headers: this.headers, params: queryParams});
+  } 
 }

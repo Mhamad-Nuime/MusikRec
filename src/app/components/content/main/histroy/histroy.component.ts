@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Songs } from 'src/app/models/song.model';
-import { getHistorySongs } from 'src/app/store/songs/songs.action';
 import { songsFeature } from 'src/app/store/songs/songs.reducer';
 import {
   IonList,
@@ -17,6 +16,8 @@ import { OpenActionSheetService } from 'src/app/services/inner-services/open-act
 import { Observable, timer } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { RefreshService } from 'src/app/services/inner-services/refresh.service';
+import { AudioStreamingService } from 'src/app/services/inner-services/audio-streaming-service.service';
+import { MediaPlayerAppearanceStateService } from 'src/app/services/inner-services/media-player-appearance-state';
 
 @Component({
   selector: 'app-histroy',
@@ -40,7 +41,9 @@ export class HistroyComponent{
   historySongs$! : Observable<{songs: Songs | null, message : string | null}>;
   constructor(private store: Store,
     public openActionSheetService : OpenActionSheetService,
-    public refreshService : RefreshService
+    public refreshService : RefreshService,
+    public audioStreamingService : AudioStreamingService,
+    public mediaPlayer:  MediaPlayerAppearanceStateService,
   ) {
     addIcons({
       ellipsisVertical
@@ -51,5 +54,9 @@ export class HistroyComponent{
     this.showSpinnerAfterRefresh = true;
     timer(1000).subscribe(() => this.showSpinnerAfterRefresh = false )
     this.refreshService.refresh();
+  }
+  playSong(song : any) {
+    this.mediaPlayer.displayMediaPlayer();
+    this.audioStreamingService.play(song);
   }
 }

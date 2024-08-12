@@ -1,34 +1,47 @@
 <ion-list id="playlist-content">
   <ion-list-header>
     <ion-title>
-      {{this.playlist.playlist_name}}
+      {{this.playlist.name}}
     </ion-title>
     <ion-button style="margin-right: 30px;" (click)="backToPlaylistsPage()">
       <ion-icon color='secondary' slot="icon-only" size="large" name="arrow-forward"></ion-icon>
     </ion-button>
   </ion-list-header>
-  @for(song of playlist.content.songs;track song.id) {
-  <ion-item [id]="$index">
-    <ion-thumbnail
-      [style.--border-radius]="'8px'"
-      slot="start"
-      (click)="playSong()"
-    >
-      <ion-img [src]="song.song_url" alt="" />
-    </ion-thumbnail>
-    <ion-label (click)="playSong()">
-      {{song.song_name}}
-    </ion-label>
-    <ion-button slot="end" fill="clear" (click)="options(true)">
-      <ion-icon
-        slot="icon-only"
-        size="large"
-        color="secondary"
-        name="ellipsis-vertical"
-        size="small"
-      ></ion-icon>
-    </ion-button>
-  </ion-item>
+  @if(playlist !== null && playlist !== undefined){
+      @if(playlist.songs){
+        @for(song of playlist.songs ;track song.id) {
+          <ion-item [id]="$index">
+            <ion-thumbnail
+              [style.--border-radius]="'8px'"
+              slot="start"
+              (click)="playSong(song)"
+            >
+              <ion-img [src]="song.imageUrl" alt="" />
+            </ion-thumbnail>
+            <ion-label
+            (click)="playSong(song)"
+            >
+              <p>{{song.name}}</p>
+              <p class="artist">{{song.artist}}</p>
+            </ion-label>
+            <ion-button slot="end" fill="clear" (click)="options(true)">
+              <ion-icon
+                slot="icon-only"
+                size="large"
+                color="secondary"
+                name="ellipsis-vertical"
+                size="small"
+              ></ion-icon>
+            </ion-button>
+          </ion-item>
+          } @empty {
+            <p class="playlist-message"> playlist is empty</p>
+          }
+      } @else {
+        <p class="playlist-message"> System isn't able to display the content of this playlist </p>
+      }
+  } @else {
+    <p class="playlist-message"> Fail to display the content of this playlist </p>
   }
 </ion-list>
 <ion-action-sheet

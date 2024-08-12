@@ -40,6 +40,78 @@
   [buttons]="actionSheetButtons"
 ></ion-action-sheet>
 
+
+<!-- add song to playlist UI -->
+@if(displayPlaylistAddingCreatingPopup){
+  <div class="select-playlist-container">
+    <div class="select-playlist-wrapper">
+      <ion-card class="playlists-list">
+        <ion-card-header>
+          <ion-card-title>Playlist</ion-card-title>
+          <ion-card-subtitle>Choose one</ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-list>
+            <ion-radio-group (ionChange)="addToPlaylist($event)">
+              @for(playlist of (playlists$ | async); track playlist.id)
+              {
+                <ion-item>
+                  <ion-radio [value]="playlist">{{ playlist.name }}</ion-radio>
+                </ion-item>
+              } @empty {
+                <p class="empty-playlist-message">Create Your First Playlist</p>
+              }
+            </ion-radio-group>
+          </ion-list>
+        </ion-card-content>
+        <ion-button fill="clear" (click)="closePlaylistPopup()">Cancel</ion-button>
+        <ion-button fill="clear"(click)="showCreatePlaylistPopup()">Create</ion-button>
+      </ion-card>
+      <div class="create-playlist-wrapper">
+        @if(displayCreatePlaylistPopup){
+          <ion-card class="create-playlist">
+            <ion-card-header>
+              <ion-card-title>Create new playlist</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              <ion-input
+              class="ion-margin-top ion-margin-bottom"
+              label="playlist Name"
+              labelPlacement="floating"
+              [clearInput]="true"
+              [(ngModel)]="this.nameOfCreatedPlaylist"
+              ></ion-input>
+            </ion-card-content>
+            <ion-button fill="clear" (click)="hideCreatePlaylistPopup()">Cancel</ion-button>
+            <ion-button fill="clear"(click)="createNewPlaylist()">OK</ion-button>
+            
+          </ion-card>
+        }
+      </div>
+    </div>
+  </div>
+}
+
+<!-- success/fail message -->
+@if(successMessage){
+  <div class="message-wraper">
+    <div class="fail-message">
+      <ion-text>
+        {{successMessage}}
+      </ion-text>
+    </div>
+  </div>
+}
+@if(failMessage){
+  <div class="message-wraper">
+    <div class="fail-message">
+      <ion-text>
+        {{failMessage}}
+      </ion-text>
+    </div>
+  </div>
+}
+
 <!-- tabs -->
 <ion-tabs #tabs (ionTabsDidChange)="setSelectedTabName()">
   <!-- The dummy player stacked above the tabs -->

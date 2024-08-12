@@ -17,6 +17,8 @@ import {  ellipsisVertical } from 'ionicons/icons';
 import { Observable, timer } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { RefreshService } from 'src/app/services/inner-services/refresh.service';
+import { AudioStreamingService } from 'src/app/services/inner-services/audio-streaming-service.service';
+import { MediaPlayerAppearanceStateService } from 'src/app/services/inner-services/media-player-appearance-state';
 
 @Component({
   selector: 'app-liked',
@@ -41,6 +43,8 @@ export class LikedComponent {
   constructor(private store: Store,
     public openActionSheetService : OpenActionSheetService,
     public refreshService : RefreshService,
+    public audioStreamingService : AudioStreamingService,
+    public mediaPlayer:  MediaPlayerAppearanceStateService,
   ) {
     addIcons({
       ellipsisVertical
@@ -51,5 +55,9 @@ export class LikedComponent {
     this.showSpinnerAfterRefresh = true;
     timer(1000).subscribe(() => this.showSpinnerAfterRefresh = false )
     this.refreshService.refresh();
+  }
+  playSong(song : any) {
+    this.mediaPlayer.displayMediaPlayer();
+    this.audioStreamingService.play(song);
   }
 }

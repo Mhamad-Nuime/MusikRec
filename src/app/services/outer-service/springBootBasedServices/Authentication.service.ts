@@ -16,7 +16,7 @@ export class AuthenticationService {
 
   login(data: LoginInfo): Observable<UserAuthentication> {
     return this.springBootService
-      .postRequest<LoginInfo, UserAuthentication>('api/v1/auth/login', data)
+      .postRequest<LoginInfo, UserAuthentication>('auth/login', data)
       .pipe(
         map((value) => {
           this.store.dispatch(saveUserInfo({ userInfo: value }));
@@ -26,7 +26,7 @@ export class AuthenticationService {
   }
   signup(data: SingUpInfo): Observable<UserAuthentication> {
     return this.springBootService
-      .postRequest<LoginInfo, UserAuthentication>('api/v1/auth/register', data)
+      .postRequest<LoginInfo, UserAuthentication>('auth/register', data)
       .pipe(
         map((value) => {
           this.store.dispatch(saveUserInfo({ userInfo: value }));

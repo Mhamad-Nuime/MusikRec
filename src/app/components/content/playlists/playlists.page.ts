@@ -24,8 +24,9 @@ import { Store } from '@ngrx/store';
 import { AsyncPipe } from '@angular/common';
 import { RefreshService } from 'src/app/services/inner-services/refresh.service';
 import { Observable, takeUntil, timer } from 'rxjs';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { PlaylistsState } from 'src/app/store/playlists/playlists.state';
+import { PlaylistService } from 'src/app/services/outer-service/springBootBasedServices/playlist.service';
+import { getLikedSongs } from 'src/app/store/songs/songs.action';
+import { getPlaylists } from 'src/app/store/playlists/playlists.actions';
 @Component({
   selector: 'app-playlists',
   templateUrl: './playlists.page.html',
@@ -52,30 +53,43 @@ import { PlaylistsState } from 'src/app/store/playlists/playlists.state';
   ],
 })
 export class PlaylistsPage {
-  playlists! : Playlist[] | null ;
-  playlists$! : Observable<PlaylistsState>;
+  playlists$! : Observable<any>;
   // show spinner after refresh
   showSpinnerAfterRefresh : boolean = false;
   constructor(private store : Store,
-    public refreshService : RefreshService
+    public refreshService : RefreshService,
+    public playlistService : PlaylistService,
   ){
     addIcons({
       ellipsisVertical,
     });
-    this.playlists$ = this.store.select(playlistFeature.selectPlaylistsState);
-    this.playlists$.pipe(takeUntilDestroyed()).subscribe(p => this.playlists = p.playlists);
+    this.playlists$ = this.store.select(playlistFeature.selectPlaylists);
   }
 
   currentPlaylist : any = null;
   displayCurrentPlaylist : boolean = false;
-
+  playlistForActionSheet! : Playlist;
   optionStatus: boolean= false;
-
+  successMessage: string | null = null;
+  failMessage: string | null = null;
   actionSheetButtons= [
   {
     text: 'Delete',
     id: 1,
-    handler: () => {}
+    handler: () => {
+      this.options(false);
+      this.playlistService.delete(this.playlistForActionSheet.id).subscribe({
+        next: (res : {message : string}) => {
+          this.successMessage = res.message;
+          timer(2000).subscribe(() => (this.successMessage = ''));
+          setTimeout(() => this.store.dispatch(getPlaylists()), 1000);
+        },
+        error: () => {
+          this.failMessage = "Fail to Delete Playlist";
+          timer(2000).subscribe(() => (this.failMessage = ''));
+        }
+      });
+    }
     },
     {
       text: 'Cancel',
@@ -87,18 +101,25 @@ export class PlaylistsPage {
 
   displayPlaylistContent(playlist : HTMLDivElement): void {
     const desiredPlaylistId : number = Number(playlist.getAttribute('id'));
-    this.currentPlaylist = this.playlists?.find(
-        (playlist) => playlist.id === desiredPlaylistId
-      );
-      this.displayCurrentPlaylist = true;
+    this.playlists$.subscribe( (playlists) => {
+      if(playlists){
+        this.currentPlaylist = (playlists).find(
+          (p : Playlist) => p.id === desiredPlaylistId
+        );
+        this.displayCurrentPlaylist = true;
+      }
+    });
   }
   
   hideplaylistContent() : void {
     this.displayCurrentPlaylist = false;
     this.currentPlaylist = null;
   }
-  options(status: boolean) : void {
+  options(status: boolean, playlist? : Playlist) : void {
     this.optionStatus = status;
+    if(playlist){
+      this.playlistForActionSheet = playlist;
+    }
   }
   onRefresh() : void {
     this.showSpinnerAfterRefresh = true;

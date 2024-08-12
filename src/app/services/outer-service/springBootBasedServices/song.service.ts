@@ -16,7 +16,7 @@ export class SongService {
     return this.store.select(userInfoFeature.selectId).pipe(
       take(1),
       switchMap(userId => {
-        return this.springBootService.getRequest<Songs>('trendy')
+        return this.springBootService.getRequest<Songs>('songs')
       })
     )
   }
@@ -24,7 +24,7 @@ export class SongService {
     return this.store.select(userInfoFeature.selectId).pipe(
       take(1),
       switchMap(userId => {
-        return this.springBootService.getRequest<Songs>('histroy');
+        return this.springBootService.getRequest<Songs>('songs/history');
       })
     )
   }
@@ -32,7 +32,7 @@ export class SongService {
     return this.store.select(userInfoFeature.selectId).pipe(
       take(1),
       switchMap(userId => {
-        return this.springBootService.getRequest<Songs>('liked');
+        return this.springBootService.getRequest<Songs>('likes', { "userId" : (userId?.toString() as string | string[])});
       })
     )
   }

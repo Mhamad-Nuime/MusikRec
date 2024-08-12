@@ -1,12 +1,11 @@
 import { Component, } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import {
   IonContent,
   IonHeader,
   IonTitle,
   IonToolbar,
-  IonRippleEffect,
-} from '@ionic/angular/standalone';
+  IonRippleEffect, IonButton } from '@ionic/angular/standalone';
 
 
 @Component({
@@ -14,7 +13,7 @@ import {
   templateUrl: './main.page.html',
   styleUrls: ['./main.page.scss'],
   standalone: true,
-  imports: [
+  imports: [IonButton, 
     IonContent,
     IonHeader,
     IonTitle,
@@ -25,6 +24,12 @@ import {
 })
 export class MainPage {
 
-  constructor() {
+  constructor(
+    public router : Router,
+  ) {
   }
+  logout(){
+    this.router.navigateByUrl("");
+  }
+
 }
