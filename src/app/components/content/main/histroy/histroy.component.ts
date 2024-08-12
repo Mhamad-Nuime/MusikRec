@@ -56,7 +56,7 @@ export class HistroyComponent{
     this.refreshService.refresh();
   }
   playSong(song : any) {
-    this.mediaPlayer.displayMediaPlayer();
+    this.mediaPlayer.displayMediaPlayer(song);
     this.audioStreamingService.play(song);
   }
 }

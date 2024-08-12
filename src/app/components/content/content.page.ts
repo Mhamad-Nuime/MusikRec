@@ -40,7 +40,7 @@ import {
 } from '@ionic/angular/standalone';
 import { MediaPlayerAppearanceStateService } from '../../services/inner-services/media-player-appearance-state';
 import { OpenActionSheetService } from '../../services/inner-services/open-action-sheet.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import {
   getHistorySongs,
@@ -106,7 +106,9 @@ export class ContentPage {
   playlists$;
   displayPlaylistAddingCreatingPopup: boolean = false;
   displayCreatePlaylistPopup: boolean = false;
+  displaySelectPlaylist: boolean = false;
   nameOfCreatedPlaylist: string = '';
+  currentUrl: string ='';
   constructor(
     private store: Store,
     public audioStreamingService: AudioStreamingService,
@@ -114,7 +116,8 @@ export class ContentPage {
     public openActionSheetService: OpenActionSheetService,
     public likeSongService: LikeSongService,
     public playlistService: PlaylistService,
-    public router: Router
+    public router: Router,
+    public activatedRoute : ActivatedRoute,
   ) {
     addIcons({
       home,
@@ -148,23 +151,40 @@ export class ContentPage {
       },
     },
     {
-      text: 'Like',
+      text: "Like",
       id: 2,
       handler: () => {
-        console.log(this.openActionSheetService.currentSong.id);
-        this.likeSongService
-          .like(this.openActionSheetService.currentSong.id)
+        console.log(this.router.url === "/content/main/liked");
+        if(this.router.url !== "/content/main/liked"){
+          this.likeSongService
+            .like(this.openActionSheetService.currentSong.id)
+            .subscribe({
+              next: () => {
+                this.successMessage = 'Add to liked list';
+                timer(2000).subscribe(() => (this.successMessage = ''));
+                setTimeout(() => this.store.dispatch(getLikedSongs()), 1000);
+              },
+              error: () => {
+                this.failMessage = 'Fail to add the song to liked list';
+                timer(2000).subscribe(() => (this.failMessage = ''));
+              },
+            });
+        } else {
+          this.likeSongService
+          .delete(this.openActionSheetService.currentSong.id)
           .subscribe({
             next: () => {
-              this.successMessage = 'Add to liked list';
+              this.successMessage = 'delete from liked list';
               timer(2000).subscribe(() => (this.successMessage = ''));
               setTimeout(() => this.store.dispatch(getLikedSongs()), 1000);
             },
             error: () => {
-              this.failMessage = 'Fail to add the song to liked list';
+              this.failMessage = 'Fail to delete the song from liked list';
               timer(2000).subscribe(() => (this.failMessage = ''));
             },
           });
+        }
+
         this.openActionSheetService.closeActionSheet();
       },
     },
@@ -173,6 +193,8 @@ export class ContentPage {
       id: 3,
       handler: () => {
         this.displayPlaylistAddingCreatingPopup = true;
+        this.displaySelectPlaylist=true;
+        this.openActionSheetService.closeActionSheet();
       },
     },
     {
@@ -199,7 +221,8 @@ export class ContentPage {
     this.mediaPlayerAppearanceState.hideMediaPlayer();
   }
   addToPlaylist(e: any) {
-    this.closePlaylistPopup();
+    this.displayPlaylistAddingCreatingPopup = false;
+    this.displaySelectPlaylist = false;
     const playlist = e.target.value;
     if (playlist) {
       this.playlistService
@@ -219,16 +242,19 @@ export class ContentPage {
   }
   closePlaylistPopup() {
     this.displayPlaylistAddingCreatingPopup = false;
+    this.displaySelectPlaylist= false;
   }
   showCreatePlaylistPopup() {
     this.displayCreatePlaylistPopup = true;
+    this.displaySelectPlaylist = false;
   }
   hideCreatePlaylistPopup() {
     this.displayCreatePlaylistPopup = false;
+    this.displayPlaylistAddingCreatingPopup = false;
   }
   hideBothCreateAndSelectPlaylistPopup() {
     this.displayCreatePlaylistPopup = false;
-    this.closePlaylistPopup();
+    this.displayPlaylistAddingCreatingPopup = false;
   }
   createNewPlaylist() {
     this.hideBothCreateAndSelectPlaylistPopup();
@@ -244,7 +270,7 @@ export class ContentPage {
               timer(2000).subscribe(() => (this.successMessage = ''));
             },
             error: () => {
-              this.failMessage = `Adding to ${playlist.name} playlist is Fail`;
+              this.failMessage = `creating to ${playlist.name} playlist is Fail`;
               timer(2000).subscribe(() => (this.failMessage = ''));
             },
           });

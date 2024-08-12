@@ -40,7 +40,7 @@ export class SongService {
     return this.store.select(userInfoFeature.selectId).pipe(
       take(1),
       switchMap(userId => {
-        return this.springBootService.getRequest<Songs>('recommanded');
+        return this.springBootService.getRequest<Songs>('songs/history');
       })
     )
   }

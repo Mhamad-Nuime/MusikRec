@@ -1,16 +1,16 @@
-@if(this.mediaPlayerAppearanceState.getMediaPlayerAppearanceState() | async){
+@if((this.mediaPlayerAppearanceState.getMediaPlayerAppearanceState() | async)?.show){
   <div class="player">
     <ion-item>
       <ion-thumbnail slot="start">
-        <img src="/assets/images/albums/when-we-all-fall-asleep.jpg" />
+        <img [src]="(this.mediaPlayerAppearanceState.getMediaPlayerAppearanceState() | async)?.song.imageUrl" />
       </ion-thumbnail>
       <ion-label class="ion-no-margin ion-text-nowrap ion-text-overflow">
         <ion-text color="secondary">
-          <p>All the Good Girls Go to Hell</p>
-          <span>Billie Eilish</span>
-          <div class="progress-bar">
+          <p>{{(this.mediaPlayerAppearanceState.getMediaPlayerAppearanceState() | async)?.song.name}}</p>
+          <span>{{(this.mediaPlayerAppearanceState.getMediaPlayerAppearanceState() | async)?.song.artist}}</span>
+          <!-- <div class="progress-bar">
             <input id="progress-range" type="range" name="progress" value="50" />
-          </div>
+          </div> -->
         </ion-text>
       </ion-label>
       <ion-button  fill="clear" (click)="playOrPause()">
@@ -45,35 +45,37 @@
 @if(displayPlaylistAddingCreatingPopup){
   <div class="select-playlist-container">
     <div class="select-playlist-wrapper">
-      <ion-card class="playlists-list">
-        <ion-card-header>
-          <ion-card-title>Playlist</ion-card-title>
-          <ion-card-subtitle>Choose one</ion-card-subtitle>
-        </ion-card-header>
-        <ion-card-content>
-          <ion-list>
-            <ion-radio-group (ionChange)="addToPlaylist($event)">
-              @for(playlist of (playlists$ | async); track playlist.id)
-              {
-                <ion-item>
-                  <ion-radio [value]="playlist">{{ playlist.name }}</ion-radio>
-                </ion-item>
-              } @empty {
-                <p class="empty-playlist-message">Create Your First Playlist</p>
-              }
-            </ion-radio-group>
-          </ion-list>
-        </ion-card-content>
-        <ion-button fill="clear" (click)="closePlaylistPopup()">Cancel</ion-button>
-        <ion-button fill="clear"(click)="showCreatePlaylistPopup()">Create</ion-button>
-      </ion-card>
+      @if(displaySelectPlaylist){
+        <ion-card class="playlists-list">
+          <ion-card-header>
+            <ion-card-title>Playlist</ion-card-title>
+            <ion-card-subtitle>Choose one</ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content class="p">
+            <ion-list class="select-playlist">
+              <ion-radio-group (ionChange)="addToPlaylist($event)" [allowEmptySelection]="true">
+                @for(playlist of (playlists$ | async); track playlist.id)
+                {
+                  <ion-item>
+                    <ion-radio [value]="playlist" class="ion-margin-bottom">{{ playlist.name || "playlist" }}</ion-radio>
+                  </ion-item>
+                } @empty {
+                  <p class="empty-playlist-message">Create Your First Playlist</p>
+                }
+              </ion-radio-group>
+            </ion-list>
+          </ion-card-content>
+          <ion-button fill="clear" (click)="closePlaylistPopup()">Cancel</ion-button>
+          <ion-button fill="clear"(click)="showCreatePlaylistPopup()">Create</ion-button>
+        </ion-card>
+      }
       <div class="create-playlist-wrapper">
         @if(displayCreatePlaylistPopup){
           <ion-card class="create-playlist">
             <ion-card-header>
               <ion-card-title>Create new playlist</ion-card-title>
             </ion-card-header>
-            <ion-card-content>
+            <ion-card-content class="p">
               <ion-input
               class="ion-margin-top ion-margin-bottom"
               label="playlist Name"
@@ -84,7 +86,6 @@
             </ion-card-content>
             <ion-button fill="clear" (click)="hideCreatePlaylistPopup()">Cancel</ion-button>
             <ion-button fill="clear"(click)="createNewPlaylist()">OK</ion-button>
-            
           </ion-card>
         }
       </div>
@@ -95,7 +96,7 @@
 <!-- success/fail message -->
 @if(successMessage){
   <div class="message-wraper">
-    <div class="fail-message">
+    <div class="success-message">
       <ion-text>
         {{successMessage}}
       </ion-text>

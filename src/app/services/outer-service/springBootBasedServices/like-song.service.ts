@@ -26,4 +26,7 @@ export class LikeSongService {
       )
     );
   }
+  delete(songId : number){
+    return this.springBootService.deleteRequest("likes/delete", { "id" : songId.toString()})
+  }
 }

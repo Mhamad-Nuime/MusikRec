@@ -94,7 +94,7 @@ export class SearchPage {
   }
 
   playSong(song : any) {
-    this.mediaPlayer.displayMediaPlayer();
+    this.mediaPlayer.displayMediaPlayer(song);
     this.audioStreamingService.play(song);
   }
 }
