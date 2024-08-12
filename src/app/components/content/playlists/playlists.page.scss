@@ -12,6 +12,7 @@ ion-content {
     rgba(191, 58, 223, 1) 60%,
     rgb(217, 83, 230) 100%
   );
+  position: relative;
 }
 div.clickable-part-of-item {
   display: flex;
@@ -130,6 +131,9 @@ ion-action-sheet {
 }
 
 .message-wraper{
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   z-index: 100;

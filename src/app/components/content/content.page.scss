@@ -144,12 +144,24 @@ ion-action-sheet{
     box-sizing: border-box;
     padding: 10px;
     width: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
     ion-card.create-playlist{
       margin: auto;
       width: 100%;
     }
   }
+}
+
+ion-item.select-playlist{
+  max-height: 250px;
+  ion-radio{
+    --color: black !important;
+  }
+}
+ion-radio::part(label) {
+  color: black !important;
+}
+
+ion-card-content.p{
+  height: 132px;
+  overflow-y: scroll;
 }

@@ -81,12 +81,12 @@ export class PlaylistsPage {
       this.playlistService.delete(this.playlistForActionSheet.id).subscribe({
         next: (res : {message : string}) => {
           this.successMessage = res.message;
-          timer(2000).subscribe(() => (this.successMessage = ''));
+          timer(1000).subscribe(() => (this.successMessage = ''));
           setTimeout(() => this.store.dispatch(getPlaylists()), 1000);
         },
         error: () => {
           this.failMessage = "Fail to Delete Playlist";
-          timer(2000).subscribe(() => (this.failMessage = ''));
+          timer(1000).subscribe(() => (this.failMessage = ''));
         }
       });
     }

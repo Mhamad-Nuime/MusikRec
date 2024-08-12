@@ -5,7 +5,6 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class OpenActionSheetService {
   public currentSong : any = {};
   private actionSheetState = new BehaviorSubject<boolean>(false);
-
   openActionSheet(song: any) : void {
     this.currentSong = song;
     this.actionSheetState.next(true);
