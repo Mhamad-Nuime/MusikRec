@@ -12,6 +12,7 @@ import { addIcons } from 'ionicons';
 import { arrowForward } from 'ionicons/icons';
 import { ActivatedRoute } from '@angular/router';
 import albums from '../../../../assets/mockdata/albums/bornToDie.json';
+import { OpenActionSheetService } from 'src/app/services/inner-services/open-action-sheet.service';
 
 @Component({
   selector: 'app-details',
@@ -29,17 +30,12 @@ import albums from '../../../../assets/mockdata/albums/bornToDie.json';
     IonIcon,
   ],
 })
-export class DetailsPage implements OnInit {
-  data = albums;
+export class DetailsPage{
+  song : any ;
 
-  constructor(private activatedRoute: ActivatedRoute) {}
-
-  ngOnInit() {}
-
-  // Helper function for image names
-  dasherize(string: string) {
-    return string.replace(/[A-Z]/g, function (char: string, index: number) {
-      return (index !== 0 ? '-' : '') + char.toLowerCase();
-    });
+  constructor(public openActionSheetService : OpenActionSheetService) {
+    this.song = this.openActionSheetService.currentSong;
   }
+
+
 }

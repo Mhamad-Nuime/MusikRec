@@ -13,7 +13,6 @@ export class PlaylistEffects {
   loadPlaylist$ = createEffect(() => this.action$.pipe(
     ofType(getPlaylists),
     mergeMap(() => {
-      console.log('hi effect work !');
       return this.playlistService.getPlaylists().pipe(
         map((playlists : Playlist[]) => getPlaylistsSuccess({playlists})),
         catchError((err: HttpErrorResponse) => {

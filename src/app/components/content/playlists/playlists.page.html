@@ -4,11 +4,11 @@
   </ion-toolbar>
 </ion-header>
 <ion-content [fullscreen]="true">
-    @if((playlists$ | async)?.playlists?.length === 0 || this.showSpinnerAfterRefresh){
+    @if((playlists$ | async)?.length === 0 || this.showSpinnerAfterRefresh){
       <div class="spinner-wrap">
         <ion-spinner name="crescent"></ion-spinner>
       </div>
-    } @else if ((playlists$ | async)?.playlists === null) {
+    } @else if ((playlists$ | async) === null || (playlists$ | async) === undefined) {
       <div class="message-error-wrapper">
         <div class="popup">
           <ion-text class="ion-text-center">
@@ -32,7 +32,7 @@
       @if(!(displayCurrentPlaylist && currentPlaylist)){
         <div id="playlists-container" class="playlists-wrap">
           <ion-list>
-            @for(playlist of (playlists$ | async)?.playlists ; track playlist.id){
+            @for(playlist of (playlists$ | async) ; track playlist.id){
             <div
               #p
               class="playlist-wrap"
@@ -42,17 +42,17 @@
                 <div class='clickable-part-of-item'(click)="displayPlaylistContent(p)">
                   <div class="image-wrap">
                     <img
-                      [src]="playlist.songs[0].url"
+                      [src]="playlist?.songs[0]?.imageUrl"
                       width="80"
                       height="80"
                     />
                   </div>
                   <ion-label>
-                    <p>{{playlist.name}}</p>
-                    <p style="overflow-x : hidden;">{{playlist.description}}</p>
+                    <p class="playlist name">{{playlist.name}}</p>
+                    <p class="playlist description"style="overflow-x : hidden;">{{playlist.description || "no description"}}</p>
                   </ion-label>
                 </div>
-                <ion-button (click)="options(true)" slot="end" fill="clear">
+                <ion-button (click)="options(true, playlist)" slot="end" fill="clear">
                   <ion-icon
                     slot="icon-only"
                     size="large"
@@ -63,6 +63,8 @@
                 </ion-button>
               </ion-item>
             </div>
+          } @empty {
+            <p> Emtpy </p>
           }
           </ion-list>
         </div>
@@ -77,4 +79,23 @@
       [buttons]="actionSheetButtons"
     ></ion-action-sheet>
     }
+    <!-- success/fail message -->
+@if(successMessage){
+  <div class="message-wraper">
+    <div class="fail-message">
+      <ion-text>
+        {{successMessage}}
+      </ion-text>
+    </div>
+  </div>
+}
+@if(failMessage){
+  <div class="message-wraper">
+    <div class="fail-message">
+      <ion-text>
+        {{failMessage}}
+      </ion-text>
+    </div>
+  </div>
+}
 </ion-content> 

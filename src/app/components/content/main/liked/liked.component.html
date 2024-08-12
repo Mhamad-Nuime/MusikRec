@@ -29,17 +29,19 @@
       <ion-thumbnail
         [style.--border-radius]="'8px'"
         slot="start"
+        (click)="playSong(song)"
         >
-        //(click)="playSong()"
         <ion-img
-          [src]="song.image"
+          [src]="song.imageUrl"
           alt=""
         />
       </ion-thumbnail>
-      <ion-label >
+      <ion-label
+      (click)="playSong(song)"
+      >
         <p>{{song.name}}</p>
-        <p>{{song.artist}}</p>
-      </ion-label> //(click)="playSong()"
+        <p class="artist">{{song.artist}}</p>
+      </ion-label>
       <ion-button slot="end" fill="clear" (click)="this.openActionSheetService.openActionSheet(song)">
         <ion-icon
           slot="icon-only"

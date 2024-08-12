@@ -11,3 +11,23 @@ ion-action-sheet{
   --color: #fff;
   --button-color: #fff;
 }
+ion-item{
+  ion-thumbnail{
+    background-color: white;
+    
+  }
+  p{
+    color: white;
+    font-size: 16px;
+  }
+  p.artist{
+    font-size: 10px;
+  }
+}
+.playlist-message{
+  display: flex;
+  justify-content: center;
+  text-shadow: 0px 0px 5px red;
+  margin-top: 130px;
+  font-size: 16px;
+}

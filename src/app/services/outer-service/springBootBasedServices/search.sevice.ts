@@ -7,6 +7,6 @@ import { Observable } from "rxjs";
 export class SearchService {
   private springBootService = inject(SpringBootService);
   search(searchTerm : string ) : Observable<Songs>{
-    return this.springBootService.getRequest<Songs>('search', {'query' : searchTerm});
+    return this.springBootService.getRequest<Songs>('songs/search', {'query' : searchTerm});
   }
 }

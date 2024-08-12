@@ -13,6 +13,8 @@ import {
 import { addIcons } from 'ionicons';
 import { arrowForward, ellipsisVertical } from 'ionicons/icons';
 import { MediaPlayerAppearanceStateService } from '../../../../services/inner-services/media-player-appearance-state';
+import { AudioStreamingService } from 'src/app/services/inner-services/audio-streaming-service.service';
+import { Playlist } from 'src/app/models/playlist.model';
 
 @Component({
   selector: 'app-playlist',
@@ -32,14 +34,15 @@ import { MediaPlayerAppearanceStateService } from '../../../../services/inner-se
     IonThumbnail,
   ],
 })
-export class PlaylistComponent implements OnInit {
-  @Input({ required: true }) playlist: any;
-  @Output('backEvent') backButton = new EventEmitter<never>();
+export class PlaylistComponent{
+  @Input({ required: true }) playlist!: Playlist;
+  @Output() backEvent = new EventEmitter<never>();
 
   optionStatus: boolean = false;
 
   constructor(
-    private mediaPlayerAppearanceState : MediaPlayerAppearanceStateService
+    public audioStreamingService : AudioStreamingService,
+    public mediaPlayer:  MediaPlayerAppearanceStateService,
   ){
     addIcons({
       ellipsisVertical,
@@ -60,15 +63,14 @@ export class PlaylistComponent implements OnInit {
         handler: () => this.options(false)
       }
     ];
-
-  ngOnInit() {}
-  playSong() : void {
-    this.mediaPlayerAppearanceState.displayMediaPlayer();
-  }
   backToPlaylistsPage() : void {
-    this.backButton.emit();
+    this.backEvent.emit();
   }
   options(status: boolean) : void {
     this.optionStatus = status;
+  }
+  playSong(song : any) {
+    this.mediaPlayer.displayMediaPlayer();
+    this.audioStreamingService.play(song);
   }
 }

@@ -26,22 +26,59 @@ import {
   IonThumbnail,
   IonText,
   IonProgressBar,
-  IonRippleEffect, IonActionSheet } from '@ionic/angular/standalone';
+  IonRippleEffect,
+  IonActionSheet,
+  IonCardTitle,
+  IonCardSubtitle,
+  IonCard,
+  IonCardHeader,
+  IonCardContent,
+  IonRadioGroup,
+  IonList,
+  IonRadio,
+  IonInput,
+} from '@ionic/angular/standalone';
 import { MediaPlayerAppearanceStateService } from '../../services/inner-services/media-player-appearance-state';
 import { OpenActionSheetService } from '../../services/inner-services/open-action-sheet.service';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { getHistorySongs, getLikedSongs, getRecommandedSongs, getTrendySongs } from 'src/app/store/songs/songs.action';
+import {
+  getHistorySongs,
+  getLikedSongs,
+  getRecommandedSongs,
+  getTrendySongs,
+} from 'src/app/store/songs/songs.action';
 import { getPlaylists } from 'src/app/store/playlists/playlists.actions';
 import { AudioStreamingService } from 'src/app/services/inner-services/audio-streaming-service.service';
+import { LikeSongService } from 'src/app/services/outer-service/springBootBasedServices/like-song.service';
+import { timer } from 'rxjs';
+import { AddToHistoryService } from 'src/app/services/outer-service/springBootBasedServices/add-to-history.service';
+import { playlistFeature } from 'src/app/store/playlists/playlists.reducer';
+import { PlaylistService } from 'src/app/services/outer-service/springBootBasedServices/playlist.service';
 
 @Component({
   selector: 'app-content',
   templateUrl: './content.page.html',
   styleUrls: ['./content.page.scss'],
   standalone: true,
-  providers: [MediaPlayerAppearanceStateService, OpenActionSheetService , AudioStreamingService],
-  imports: [IonActionSheet, 
+  providers: [
+    MediaPlayerAppearanceStateService,
+    OpenActionSheetService,
+    AudioStreamingService,
+    LikeSongService,
+    AddToHistoryService,
+  ],
+  imports: [
+    IonInput,
+    IonRadio,
+    IonList,
+    IonRadioGroup,
+    IonCardContent,
+    IonCardHeader,
+    IonCard,
+    IonCardSubtitle,
+    IonCardTitle,
+    IonActionSheet,
     IonRippleEffect,
     IonProgressBar,
     IonText,
@@ -62,15 +99,22 @@ import { AudioStreamingService } from 'src/app/services/inner-services/audio-str
 export class ContentPage {
   @ViewChild('tabs') tabs!: IonTabs;
   selected: string = '';
-
-  openActionSheet: boolean = false ;
-
+  isPaused: boolean = false;
+  openActionSheet: boolean = false;
+  successMessage: string | null = null;
+  failMessage: string | null = null;
+  playlists$;
+  displayPlaylistAddingCreatingPopup: boolean = false;
+  displayCreatePlaylistPopup: boolean = false;
+  nameOfCreatedPlaylist: string = '';
   constructor(
-    private store : Store,
-    public audioStreamingService : AudioStreamingService,
+    private store: Store,
+    public audioStreamingService: AudioStreamingService,
     public mediaPlayerAppearanceState: MediaPlayerAppearanceStateService,
-    public openActionSheetService : OpenActionSheetService,
-    public router : Router,
+    public openActionSheetService: OpenActionSheetService,
+    public likeSongService: LikeSongService,
+    public playlistService: PlaylistService,
+    public router: Router
   ) {
     addIcons({
       home,
@@ -88,33 +132,127 @@ export class ContentPage {
     this.store.dispatch(getTrendySongs());
     this.store.dispatch(getRecommandedSongs());
     this.store.dispatch(getPlaylists());
+    this.playlists$ = this.store.select(playlistFeature.selectPlaylists);
   }
 
   public actionSheetButtons = [
     {
       text: 'Details',
       id: 1,
-      handler: (id : number) => {
+      handler: (id: number) => {
         this.openActionSheetService.closeActionSheet();
-        this.router.navigate(['/content/details', this.openActionSheetService.currentSong.id ]);
+        this.router.navigate([
+          '/content/details',
+          this.openActionSheetService.currentSong.id,
+        ]);
+      },
+    },
+    {
+      text: 'Like',
+      id: 2,
+      handler: () => {
+        console.log(this.openActionSheetService.currentSong.id);
+        this.likeSongService
+          .like(this.openActionSheetService.currentSong.id)
+          .subscribe({
+            next: () => {
+              this.successMessage = 'Add to liked list';
+              timer(2000).subscribe(() => (this.successMessage = ''));
+              setTimeout(() => this.store.dispatch(getLikedSongs()), 1000);
+            },
+            error: () => {
+              this.failMessage = 'Fail to add the song to liked list';
+              timer(2000).subscribe(() => (this.failMessage = ''));
+            },
+          });
+        this.openActionSheetService.closeActionSheet();
       },
     },
     {
       text: 'Save',
-      id: 2,
+      id: 3,
       handler: () => {
-        // here we should open the pop that used to add song to a certain popup
+        this.displayPlaylistAddingCreatingPopup = true;
       },
     },
     {
       text: 'Cancel',
       role: 'cancel',
-      id: 3,
+      id: 4,
       handler: () => this.openActionSheetService.closeActionSheet(),
     },
   ];
 
   setSelectedTabName() {
     this.selected = this.tabs.getSelected() as string;
+  }
+  playOrPause(): void {
+    if (this.isPaused) {
+      this.audioStreamingService.continue();
+    } else {
+      this.audioStreamingService.pause();
+    }
+    this.isPaused = !this.isPaused;
+  }
+  closeMediaPlayer() {
+    this.audioStreamingService.pause();
+    this.mediaPlayerAppearanceState.hideMediaPlayer();
+  }
+  addToPlaylist(e: any) {
+    this.closePlaylistPopup();
+    const playlist = e.target.value;
+    if (playlist) {
+      this.playlistService
+        .add(this.openActionSheetService.currentSong.id, playlist.id)
+        .subscribe({
+          next: () => {
+            this.successMessage = `Adding to ${playlist.name} playlist is succeded`;
+            timer(2000).subscribe(() => (this.successMessage = ''));
+            setTimeout(() => this.store.dispatch(getPlaylists()), 1000);
+          },
+          error: () => {
+            this.failMessage = `Adding to ${playlist.name} playlist is Fail`;
+            timer(2000).subscribe(() => (this.failMessage = ''));
+          },
+        });
+    }
+  }
+  closePlaylistPopup() {
+    this.displayPlaylistAddingCreatingPopup = false;
+  }
+  showCreatePlaylistPopup() {
+    this.displayCreatePlaylistPopup = true;
+  }
+  hideCreatePlaylistPopup() {
+    this.displayCreatePlaylistPopup = false;
+  }
+  hideBothCreateAndSelectPlaylistPopup() {
+    this.displayCreatePlaylistPopup = false;
+    this.closePlaylistPopup();
+  }
+  createNewPlaylist() {
+    this.hideBothCreateAndSelectPlaylistPopup();
+    this.playlistService.create(this.nameOfCreatedPlaylist).subscribe({
+      next: (playlist) => {
+        this.successMessage = `creating ${playlist.name} playlist is succeded`;
+        timer(2000).subscribe(() => (this.successMessage = ''));
+        this.playlistService
+          .add(this.openActionSheetService.currentSong.id, playlist.id)
+          .subscribe({
+            next: () => {
+              this.successMessage = `add to ${playlist.name} playlist is succeded`;
+              timer(2000).subscribe(() => (this.successMessage = ''));
+            },
+            error: () => {
+              this.failMessage = `Adding to ${playlist.name} playlist is Fail`;
+              timer(2000).subscribe(() => (this.failMessage = ''));
+            },
+          });
+      },
+      error: () => {
+        this.failMessage = `creating playlist is Fail`;
+        timer(2000).subscribe(() => (this.failMessage = ''));
+      },
+    });
   }
 }

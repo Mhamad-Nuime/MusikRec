@@ -28,4 +28,15 @@ ion-list{
 }
 ion-item{
   --background: transparent !important;
+  ion-thumbnail{
+    background-color: white;
+    
+  }
+  p{
+    color: white;
+    font-size: 16px;
+  }
+  p.artist{
+    font-size: 10px;
+  }
 }
