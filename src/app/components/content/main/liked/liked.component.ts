@@ -37,7 +37,7 @@ import { MediaPlayerAppearanceStateService } from 'src/app/services/inner-servic
   ],
 })
 export class LikedComponent {
-  liked$! : Observable<{songs: Songs | null, message : string | null}>;
+  liked$! : Observable<{songs: Songs | null | undefined, message : string | null}>;
   // show or hide loading spinner
   showSpinnerAfterRefresh : boolean = false ;
   constructor(private store: Store,

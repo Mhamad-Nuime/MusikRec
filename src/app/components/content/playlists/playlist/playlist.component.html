@@ -24,7 +24,7 @@
               <p>{{song.name}}</p>
               <p class="artist">{{song.artist}}</p>
             </ion-label>
-            <ion-button slot="end" fill="clear" (click)="options(true)">
+            <ion-button slot="end" fill="clear" (click)="options(song)">
               <ion-icon
                 slot="icon-only"
                 size="large"
@@ -44,6 +44,24 @@
     <p class="playlist-message"> Fail to display the content of this playlist </p>
   }
 </ion-list>
+@if(successMessage){
+  <div class="message-wraper">
+    <div class="success-message">
+      <ion-text>
+        {{successMessage}}
+      </ion-text>
+    </div>
+  </div>
+}
+@if(failMessage){
+  <div class="message-wraper">
+    <div class="fail-message">
+      <ion-text>
+        {{failMessage}}
+      </ion-text>
+    </div>
+  </div>
+}
 <ion-action-sheet
   [isOpen]="optionStatus"
   header="Actions"

@@ -38,7 +38,7 @@ import { MediaPlayerAppearanceStateService } from 'src/app/services/inner-servic
 export class HistroyComponent{
   // show or hide loading spinner 
   showSpinnerAfterRefresh : boolean = false;
-  historySongs$! : Observable<{songs: Songs | null, message : string | null}>;
+  historySongs$! : Observable<{songs: Songs | null | undefined, message : string | null}>;
   constructor(private store: Store,
     public openActionSheetService : OpenActionSheetService,
     public refreshService : RefreshService,

@@ -1,4 +1,4 @@
-@if((trendy$ | async)?.songs?.length === 0 || this.showSpinnerAfterRefresh){
+@if((trendy$ | async)?.songs === undefined || this.showSpinnerAfterRefresh){
   <div class="spinner-wrap">
     <ion-spinner name="crescent"></ion-spinner>
   </div>
@@ -24,51 +24,59 @@
   </div>
 } @else {
   <div class="content-wrap" >
-    <ion-card id="recommandations" class="ion-no-margin">
-      <ion-card-header>
-        <ion-text>
-          <h3>Recommandations</h3>
-        </ion-text>
-      </ion-card-header>
-      <ion-card-content>
-        <div class="swiper-wrap">
-          <swiper-container
-            class="mySwiper"
-            pagination="true"
-            effect="coverflow"
-            grab-cursor="true"
-            centered-slides="true"
-            slides-per-view="auto"
-            coverflow-effect-rotate="50"
-            coverflow-effect-stretch="0"
-            coverflow-effect-depth="100"
-            coverflow-effect-modifier="1"
-            coverflow-effect-slide-shadows="true"
-            autoplay-delay="2500"
-            autoplay-disable-on-interaction="false"
-          >
-            @for(recSong of (recommanded$ | async)?.songs ; track recSong.id){
-            <swiper-slide [song]="recSong"
-            (click)="playSong(recSong)"
+    @if((recommanded$ | async)?.songs !== null && (recommanded$ | async)?.songs !== undefined ){
+      <ion-card id="recommandations" class="ion-no-margin">
+        <ion-card-header>
+          <ion-text>
+            <h3>Recommandations</h3>
+          </ion-text>
+        </ion-card-header>
+        <ion-card-content>
+          <div class="swiper-wrap">
+            <swiper-container
+              class="mySwiper"
+              pagination="true"
+              effect="coverflow"
+              grab-cursor="true"
+              centered-slides="true"
+              slides-per-view="auto"
+              coverflow-effect-rotate="50"
+              coverflow-effect-stretch="0"
+              coverflow-effect-depth="100"
+              coverflow-effect-modifier="1"
+              coverflow-effect-slide-shadows="true"
+              autoplay-delay="2500"
+              autoplay-disable-on-interaction="false"
             >
-              <div class="slide-flex">
-                <div class="img-wrap">
-                  <img
-                    [src]="recSong.imageUrl"
-                    alt=""
-                    width="150"
-                    height="150"
-                  />
+              @for(recSong of (recommanded$ | async)?.songs ; track recSong.id){
+              <swiper-slide [song]="recSong"
+              (click)="playSong(recSong)"
+              >
+                <div class="slide-flex">
+                  <div class="img-wrap">
+                    <img
+                      [src]="recSong.imageUrl"
+                      alt=""
+                      width="150"
+                      height="150"
+                    />
+                  </div>
+                  <p style="overflow-x: hidden">{{recSong.name}}</p>
+                  <p style="overflow-x: hidden">{{recSong.artist}}</p>
                 </div>
-                <p style="overflow-x: hidden">{{recSong.name}}</p>
-                <p style="overflow-x: hidden">{{recSong.artist}}</p>
-              </div>
-            </swiper-slide>
-            }
-          </swiper-container>
-        </div>
-      </ion-card-content>
-    </ion-card>
+              </swiper-slide>
+              } @empty {
+                <div class="empty-wrapper">
+                  <p class="empty">
+                    Empty
+                  </p>
+                </div>
+              }
+            </swiper-container>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    }
     <ion-list id="time-line">
       <ion-list-header>
         <ion-text>
@@ -103,6 +111,12 @@
           ></ion-icon>
         </ion-button>
       </ion-item>
+      } @empty {
+        <div class="empty-wrapper">
+          <p class="empty">
+            Empty
+          </p>
+        </div>
       }
       <ion-infinite-scroll class="ion-margin-vertical">
         <ion-infinite-scroll-content

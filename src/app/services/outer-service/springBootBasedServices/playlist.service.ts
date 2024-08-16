@@ -46,4 +46,7 @@ export class PlaylistService {
   delete(playlistId : number) {
     return this.springBootService.deleteRequest("playlists/delete", {"playlistId" : playlistId.toString()});
   }
+  removeSongFromPlaylist(songId : number, playlistId : number) {
+    return this.springBootService.deleteRequest("songs/delete-from-playlist", {"songId": songId.toString(), "playlistId" : playlistId.toString() });
+  }
 }
