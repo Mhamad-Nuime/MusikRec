@@ -268,6 +268,7 @@ export class ContentPage {
             next: () => {
               this.successMessage = `add to ${playlist.name} playlist is succeded`;
               timer(2000).subscribe(() => (this.successMessage = ''));
+              this.store.dispatch(getPlaylists());
             },
             error: () => {
               this.failMessage = `creating to ${playlist.name} playlist is Fail`;

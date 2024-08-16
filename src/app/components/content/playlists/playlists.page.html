@@ -4,11 +4,11 @@
   </ion-toolbar>
 </ion-header>
 <ion-content [fullscreen]="true">
-    @if((playlists$ | async)?.length === 0 || this.showSpinnerAfterRefresh){
+    @if((playlists$ | async) === undefined || this.showSpinnerAfterRefresh){
       <div class="spinner-wrap">
         <ion-spinner name="crescent"></ion-spinner>
       </div>
-    } @else if ((playlists$ | async) === null || (playlists$ | async) === undefined) {
+    } @else if ((playlists$ | async) === null) {
       <div class="message-error-wrapper">
         <div class="popup">
           <ion-text class="ion-text-center">

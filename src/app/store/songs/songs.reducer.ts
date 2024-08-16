@@ -4,19 +4,19 @@ import { getHistorySongsFail, getHistorySongsSuccess, getLikedSongsFail, getLike
 
 export const initialState : SongsState = {
   historySongs: {
-    songs: [],
+    songs: undefined,
     message : null
   },
   likedSongs: {
-    songs: [],
+    songs: undefined,
     message : null
   },
   trendySongs: {
-    songs: [],
+    songs: undefined,
     message : null
   },
   recommandedSongs: {
-    songs: [],
+    songs: undefined,
     message : null
   }
 }

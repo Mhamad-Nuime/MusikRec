@@ -3,7 +3,7 @@ import { getPlaylistsFail, getPlaylistsSuccess } from "./playlists.actions"
 import { PlaylistsState } from "./playlists.state"
 
 export const initialState : PlaylistsState = {
-  playlists : [],
+  playlists : undefined,
   message: null
 }
 export const playlistReducer = createReducer(

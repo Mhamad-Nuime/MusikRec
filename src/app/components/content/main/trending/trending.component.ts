@@ -12,7 +12,7 @@ import { RefreshService } from 'src/app/services/inner-services/refresh.service'
 import { AudioStreamingService } from 'src/app/services/inner-services/audio-streaming-service.service';
 import { MediaPlayerAppearanceStateService } from 'src/app/services/inner-services/media-player-appearance-state';
 import { AddToHistoryService } from 'src/app/services/outer-service/springBootBasedServices/add-to-history.service';
-import { getHistorySongs } from 'src/app/store/songs/songs.action';
+import { getHistorySongs, getRecommandedSongs } from 'src/app/store/songs/songs.action';
 @Component({
   selector: 'app-trending',
   standalone: true,
@@ -22,8 +22,8 @@ import { getHistorySongs } from 'src/app/store/songs/songs.action';
   imports: [AsyncPipe, IonRippleEffect],
 })
 export class TrendingComponent implements OnDestroy{
-  trendy$! : Observable<{songs: Songs | null, message : string | null}>;
-  recommanded$! : Observable<{songs: Songs | null, message : string | null}>;
+  trendy$! : Observable<{songs: Songs | null | undefined, message : string | null}>;
+  recommanded$! : Observable<{songs: Songs | null | undefined, message : string | null}>;
   recommandedSongs : Songs = [];
   sub : any;
   // show spinner after refresh
@@ -55,6 +55,9 @@ export class TrendingComponent implements OnDestroy{
   playSong(song : any) {
     this.mediaPlayer.displayMediaPlayer(song);
     this.audioStreamingService.play(song);
-    this.sub = this.addToHistoryService.add(song.id).subscribe(() =>this.store.dispatch(getHistorySongs()));
+    this.sub = this.addToHistoryService.add(song.id).subscribe(() =>{
+      this.store.dispatch(getHistorySongs());
+      this.store.dispatch(getRecommandedSongs());
+    });
   }
 }
